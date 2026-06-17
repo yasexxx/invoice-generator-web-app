@@ -22,8 +22,8 @@ const FOOTER_COLS: FooterCol[] = [
   {
     heading: 'Legal',
     links: [
-      { label: 'Terms of Service', href: '/terms' },
-      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms of Service', href: '/terms-of-service' },
+      { label: 'Privacy Policy', href: '/privacy-policy' },
     ],
   },
   {

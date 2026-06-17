@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export function CTASection() {
   return (
     <section className="py-xxl max-w-[1200px] mx-auto px-lg">
@@ -27,12 +29,12 @@ function CTAContent() {
         14-day free trial today.
       </p>
       <div className="flex flex-col sm:flex-row gap-md justify-center">
-        <button className="bg-primary-container text-text-primary px-xl py-md rounded-lg font-bold text-lg active:scale-95 transition-all shadow-lg hover:brightness-110">
+        <Link href="/register" className="bg-primary-container text-text-primary px-xl py-md rounded-lg font-bold text-lg active:scale-95 transition-all shadow-lg hover:brightness-110">
           Get Started Free
-        </button>
-        <button className="text-on-surface px-xl py-md rounded-lg font-medium hover:text-primary transition-all underline underline-offset-4">
+        </Link>
+        <Link href="/contact" className="text-on-surface px-xl py-md rounded-lg font-medium hover:text-primary transition-all underline underline-offset-4">
           Contact Sales Team
-        </button>
+        </Link>
       </div>
     </div>
   )

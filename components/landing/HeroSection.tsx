@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 function HeroText() {
   return (
     <div className="z-10 text-center lg:text-left">
@@ -24,9 +26,9 @@ function HeroText() {
 function HeroCTAs() {
   return (
     <div className="flex flex-col sm:flex-row gap-md justify-center lg:justify-start">
-      <button className="bg-primary-container text-text-primary px-xl py-md rounded-lg font-bold text-lg active:scale-95 transition-all shadow-lg hover:brightness-110">
+      <Link href="/register" className="bg-primary-container text-text-primary px-xl py-md rounded-lg font-bold text-lg active:scale-95 transition-all shadow-lg hover:brightness-110">
         Get Started Free
-      </button>
+      </Link>
       <button className="border border-outline-variant text-on-surface px-xl py-md rounded-lg font-medium hover:bg-surface-variant transition-all flex items-center justify-center gap-sm">
         <span className="material-symbols-outlined text-[22px] leading-none">play_circle</span>
         View Demo
