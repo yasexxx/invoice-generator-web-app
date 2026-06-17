@@ -1,11 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui'
+import { Button, Input, Textarea } from '@/components/ui'
 
 type FormState = {
-  name: string
-  email: string
+  name:    string
+  email:   string
   subject: string
   message: string
 }
@@ -19,9 +19,6 @@ const SUBJECTS = [
   'Account help',
   'General question',
 ] as const
-
-const INPUT_CLASS =
-  'w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-md px-lg text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all body-md'
 
 export function ContactForm() {
   const [form, setForm] = useState<FormState>({ name: '', email: '', subject: '', message: '' })
@@ -47,54 +44,33 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className="glass-card rounded-xl p-lg md:p-xl border border-outline-variant/20 flex flex-col gap-lg">
       <FormHeader />
       <div className="grid sm:grid-cols-2 gap-md">
-        <FieldWrapper label="Your name">
-          <input
-            id="contact-name"
-            type="text"
-            placeholder="Alex Johnson"
-            required
-            value={form.name}
-            onChange={handleChange('name')}
-            className={INPUT_CLASS}
-          />
-        </FieldWrapper>
-        <FieldWrapper label="Email address">
-          <input
-            id="contact-email"
-            type="email"
-            placeholder="alex@company.com"
-            required
-            value={form.email}
-            onChange={handleChange('email')}
-            className={INPUT_CLASS}
-          />
-        </FieldWrapper>
-      </div>
-      <FieldWrapper label="Subject">
-        <select
-          id="contact-subject"
+        <Input
+          label="Your name"
+          type="text"
+          placeholder="Alex Johnson"
           required
-          value={form.subject}
-          onChange={handleChange('subject')}
-          className={INPUT_CLASS}
-        >
-          <option value="" disabled>Select a topic…</option>
-          {SUBJECTS.map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
-      </FieldWrapper>
-      <FieldWrapper label="Message">
-        <textarea
-          id="contact-message"
-          rows={5}
-          placeholder="Tell us how we can help…"
-          required
-          value={form.message}
-          onChange={handleChange('message')}
-          className={`${INPUT_CLASS} resize-none`}
+          value={form.name}
+          onChange={handleChange('name')}
         />
-      </FieldWrapper>
+        <Input
+          label="Email address"
+          type="email"
+          placeholder="alex@company.com"
+          required
+          value={form.email}
+          onChange={handleChange('email')}
+        />
+      </div>
+      <SubjectSelect value={form.subject} onChange={handleChange('subject')} />
+      <Textarea
+        label="Message"
+        rows={5}
+        placeholder="Tell us how we can help…"
+        required
+        resize="none"
+        value={form.message}
+        onChange={handleChange('message')}
+      />
       <Button type="submit" disabled={submitState === 'submitting'} className="self-start">
         {submitState === 'submitting' ? 'Sending…' : 'Send Message'}
       </Button>
@@ -111,16 +87,27 @@ function FormHeader() {
   )
 }
 
-interface FieldWrapperProps {
-  label: string
-  children: React.ReactNode
+interface SubjectSelectProps {
+  value:    string
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-function FieldWrapper({ label, children }: FieldWrapperProps) {
+function SubjectSelect({ value, onChange }: SubjectSelectProps) {
   return (
     <div className="flex flex-col gap-xs">
-      <label className="label-md text-text-muted">{label}</label>
-      {children}
+      <label className="label-md text-text-muted" htmlFor="contact-subject">Subject</label>
+      <select
+        id="contact-subject"
+        required
+        value={value}
+        onChange={onChange}
+        className="w-full bg-surface-container border border-outline-variant/40 rounded-lg py-[10px] px-md text-on-surface focus:outline-none focus:border-primary-container focus:ring-2 focus:ring-primary-container/25 transition-all body-md"
+      >
+        <option value="" disabled>Select a topic…</option>
+        {SUBJECTS.map((s) => (
+          <option key={s} value={s}>{s}</option>
+        ))}
+      </select>
     </div>
   )
 }

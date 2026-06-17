@@ -1,17 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { Button, Input } from '@/components/ui'
 import { SocialAuthButtons } from './SocialAuthButtons'
-
-function SocialDivider() {
-  return (
-    <div className="flex items-center gap-md">
-      <div className="h-px flex-1 bg-outline-variant/20" />
-      <span className="label-sm text-text-muted uppercase tracking-widest">or continue with</span>
-      <div className="h-px flex-1 bg-outline-variant/20" />
-    </div>
-  )
-}
 
 export function LoginForm() {
   const [remember, setRemember] = useState(false)
@@ -42,65 +33,41 @@ function LoginCardHeader() {
 function LoginFields() {
   return (
     <div className="flex flex-col gap-md">
-      <IconInput id="email" label="Email address" type="email" placeholder="name@company.com" icon="mail" />
-      <PasswordField />
+      <Input
+        id="login-email"
+        label="Email address"
+        type="email"
+        placeholder="name@company.com"
+        icon="mail"
+        size="lg"
+      />
+      <PasswordFieldRow />
     </div>
   )
 }
 
-interface IconInputProps {
-  id: string
-  label: string
-  type: React.HTMLInputTypeAttribute
-  placeholder: string
-  icon: string
-}
-
-function IconInput({ id, label, type, placeholder, icon }: IconInputProps) {
-  return (
-    <div className="flex flex-col gap-xs">
-      <label className="label-md text-text-muted" htmlFor={id}>{label}</label>
-      <div className="relative group">
-        <span className="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">
-          {icon}
-        </span>
-        <input
-          id={id}
-          type={type}
-          placeholder={placeholder}
-          className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-md pl-xl pr-md text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all body-md"
-        />
-      </div>
-    </div>
-  )
-}
-
-function PasswordField() {
+function PasswordFieldRow() {
   return (
     <div className="flex flex-col gap-xs">
       <div className="flex justify-between items-center">
-        <label className="label-md text-text-muted" htmlFor="password">Password</label>
-        <a className="label-sm text-primary hover:text-secondary transition-colors" href="#">
+        <label className="label-md text-text-muted" htmlFor="login-password">Password</label>
+        <a href="#" className="label-sm text-primary hover:text-secondary transition-colors">
           Forgot password?
         </a>
       </div>
-      <div className="relative group">
-        <span className="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">
-          lock
-        </span>
-        <input
-          id="password"
-          type="password"
-          placeholder="••••••••"
-          className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg py-md pl-xl pr-md text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all body-md"
-        />
-      </div>
+      <Input
+        id="login-password"
+        type="password"
+        placeholder="••••••••"
+        icon="lock"
+        size="lg"
+      />
     </div>
   )
 }
 
 interface RememberCheckboxProps {
-  checked: boolean
+  checked:  boolean
   onChange: (v: boolean) => void
 }
 
@@ -120,14 +87,21 @@ function RememberCheckbox({ checked, onChange }: RememberCheckboxProps) {
 
 function SubmitButton() {
   return (
-    <button
-      type="submit"
-      className="w-full bg-primary-container text-text-primary font-bold py-md rounded-lg shadow-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-sm group"
-    >
+    <Button type="submit" size="lg" className="w-full group">
       <span>Log In</span>
       <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">
         arrow_forward
       </span>
-    </button>
+    </Button>
+  )
+}
+
+function SocialDivider() {
+  return (
+    <div className="flex items-center gap-md">
+      <div className="h-px flex-1 bg-outline-variant/20" />
+      <span className="label-sm text-text-muted uppercase tracking-widest">or continue with</span>
+      <div className="h-px flex-1 bg-outline-variant/20" />
+    </div>
   )
 }

@@ -54,7 +54,7 @@ function ContactHero() {
       <div className="max-w-[1200px] mx-auto px-lg">
         <span className="label-md text-primary mb-sm block">SUPPORT</span>
         <h1 className="display-lg mb-md">How can we help?</h1>
-        <p className="body-lg text-text-muted max-w-xl mx-auto">
+        <p className="body-lg text-text-muted mx-auto">
           Our team is here to help you get the most out of Invoicely. Choose how to reach us below.
         </p>
       </div>

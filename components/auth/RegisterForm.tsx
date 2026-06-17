@@ -1,15 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
+import { Button, Input } from '@/components/ui'
 import { SocialAuthButtons } from './SocialAuthButtons'
 
 interface RegisterFormState {
-  fullName: string
-  businessName: string
-  email: string
-  password: string
+  fullName:      string
+  businessName:  string
+  email:         string
+  password:      string
   agreedToTerms: boolean
-  showPassword: boolean
+  showPassword:  boolean
 }
 
 const INITIAL_STATE: RegisterFormState = {
@@ -21,71 +23,35 @@ const INITIAL_STATE: RegisterFormState = {
   showPassword:  false,
 }
 
-interface FieldInputProps {
-  id: string
-  label: string
-  type: React.HTMLInputTypeAttribute
-  placeholder: string
-  icon: string
-  value: string
-  onChange: (v: string) => void
-  hint?: string
-  trailingSlot?: React.ReactNode
-}
-
-function FieldInput({ id, label, type, placeholder, icon, value, onChange, hint, trailingSlot }: FieldInputProps) {
-  return (
-    <div className="space-y-xs">
-      <label className="label-md text-text-muted" htmlFor={id}>{label}</label>
-      <div className="relative">
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-[20px]">
-          {icon}
-        </span>
-        <input
-          id={id}
-          type={type}
-          value={value}
-          placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full bg-surface-container h-12 pl-12 pr-4 rounded-lg border border-outline-variant/30 text-on-surface placeholder:text-outline-variant focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-primary-container transition-all"
-        />
-        {trailingSlot}
-      </div>
-      {hint && <p className="label-sm text-text-muted opacity-60">{hint}</p>}
-    </div>
-  )
-}
-
 export function RegisterForm() {
   const [form, setForm] = useState<RegisterFormState>(INITIAL_STATE)
 
   const set = <K extends keyof RegisterFormState>(key: K) =>
     (value: RegisterFormState[K]) => setForm((prev) => ({ ...prev, [key]: value }))
 
-  const togglePasswordVisibility = () => set('showPassword')(!form.showPassword)
-
   return (
     <div className="p-xl md:p-xxl bg-surface-container-lowest/60">
       <RegisterFormHeader />
-
       <form className="space-y-lg" onSubmit={(e) => e.preventDefault()}>
-        <FieldInput id="full_name"      label="Full Name"       type="text"     placeholder="John Doe"       icon="person"         value={form.fullName}     onChange={set('fullName')} />
-        <FieldInput id="business_name"  label="Business Name"   type="text"     placeholder="Acme Corp"      icon="corporate_fare" value={form.businessName} onChange={set('businessName')} />
-        <FieldInput id="email"          label="Email Address"   type="email"    placeholder="john@example.com" icon="mail"           value={form.email}        onChange={set('email')} />
-        <FieldInput
-          id="password"
+        <Input id="full-name"      label="Full Name"      type="text"  placeholder="John Doe"         icon="person"         size="lg" value={form.fullName}     onChange={(e) => set('fullName')(e.target.value)} />
+        <Input id="business-name"  label="Business Name"  type="text"  placeholder="Acme Corp"        icon="corporate_fare" size="lg" value={form.businessName} onChange={(e) => set('businessName')(e.target.value)} />
+        <Input id="register-email" label="Email Address"  type="email" placeholder="john@example.com" icon="mail"           size="lg" value={form.email}        onChange={(e) => set('email')(e.target.value)} />
+        <Input
+          id="register-password"
           label="Password"
           type={form.showPassword ? 'text' : 'password'}
           placeholder="••••••••"
           icon="lock"
-          value={form.password}
-          onChange={set('password')}
+          size="lg"
           hint="Minimum 8 characters with one number."
+          value={form.password}
+          onChange={(e) => set('password')(e.target.value)}
           trailingSlot={
             <button
               type="button"
-              onClick={togglePasswordVisibility}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors"
+              onClick={() => set('showPassword')(!form.showPassword)}
+              className="text-on-surface-variant hover:text-primary transition-colors"
+              aria-label={form.showPassword ? 'Hide password' : 'Show password'}
             >
               <span className="material-symbols-outlined text-[20px]">
                 {form.showPassword ? 'visibility_off' : 'visibility'}
@@ -93,26 +59,22 @@ export function RegisterForm() {
             </button>
           }
         />
-
         <TermsCheckbox checked={form.agreedToTerms} onChange={set('agreedToTerms')} />
-
         <div className="pt-md space-y-md">
-          <button
-            type="submit"
-            className="w-full h-12 bg-primary-container text-secondary-fixed-dim font-bold rounded-lg hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-sm shadow-lg shadow-primary-container/20"
-          >
+          <Button type="submit" size="lg" className="w-full group">
             Create Account
-            <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
-          </button>
+            <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">
+              arrow_forward
+            </span>
+          </Button>
           <div className="flex items-center justify-center gap-sm">
             <span className="body-md text-text-muted">Already have an account?</span>
-            <a href="/login" className="body-md text-primary font-semibold hover:underline">
+            <Link href="/login" className="body-md text-primary font-semibold hover:underline">
               Log in
-            </a>
+            </Link>
           </div>
         </div>
       </form>
-
       <SocialDivider />
       <SocialAuthButtons />
     </div>
@@ -131,7 +93,7 @@ function RegisterFormHeader() {
 }
 
 interface TermsCheckboxProps {
-  checked: boolean
+  checked:  boolean
   onChange: (v: boolean) => void
 }
 
@@ -149,9 +111,9 @@ function TermsCheckbox({ checked, onChange }: TermsCheckboxProps) {
       </div>
       <label className="label-sm text-on-surface-variant" htmlFor="terms">
         I agree to the{' '}
-        <a className="text-primary hover:underline" href="#">Terms of Service</a>
+        <Link href="/terms" className="text-primary hover:underline">Terms of Service</Link>
         {' '}and{' '}
-        <a className="text-primary hover:underline" href="#">Privacy Policy</a>.
+        <Link href="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
       </label>
     </div>
   )

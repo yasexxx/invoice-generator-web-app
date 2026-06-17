@@ -86,7 +86,7 @@ function PricingHero() {
       <div className="max-w-[1200px] mx-auto px-lg">
         <span className="label-md text-primary mb-sm block">PRICING</span>
         <h1 className="display-lg mb-md">Simple, transparent pricing</h1>
-        <p className="body-lg text-text-muted max-w-xl mx-auto">
+        <p className="body-lg text-text-muted mx-auto">
           Start free. Scale when you&apos;re ready. No hidden fees, no surprise charges.
         </p>
       </div>

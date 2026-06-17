@@ -100,7 +100,7 @@ function FAQsHero() {
       <div className="max-w-[1200px] mx-auto px-lg">
         <span className="label-md text-primary mb-sm block">SUPPORT</span>
         <h1 className="display-lg mb-md">Frequently asked questions</h1>
-        <p className="body-lg text-text-muted max-w-xl mx-auto">
+        <p className="body-lg text-text-muted mx-auto">
           Can&apos;t find an answer?{' '}
           <Link href="/contact" className="text-primary hover:underline underline-offset-4">
             Ask our team.
