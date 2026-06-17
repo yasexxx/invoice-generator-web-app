@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+export const BRAND_NAME = 'Invoicely'
+
 export type BrandSize = 'sm' | 'md' | 'lg'
 
 export interface BrandProps {
@@ -24,7 +26,7 @@ export function Brand({ size = 'md', showIcon = false, subtitle, className }: Br
         {showIcon && (
           <span className="material-symbols-outlined text-primary">receipt_long</span>
         )}
-        Invoicely
+        {BRAND_NAME}
       </Link>
       {subtitle && <p className="label-sm text-text-muted mt-xs">{subtitle}</p>}
     </div>

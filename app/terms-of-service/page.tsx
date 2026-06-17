@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { TopNav } from '@/components/layout/TopNav'
 import { Footer } from '@/components/layout/Footer'
+import { BRAND_NAME } from '@/components/ui'
 
 interface LegalSection {
   id: string
@@ -13,7 +14,7 @@ const SECTIONS: LegalSection[] = [
     id: 'acceptance',
     title: '1. Acceptance of Terms',
     paragraphs: [
-      'By accessing or using Invoicely ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not use the Service.',
+      `By accessing or using ${BRAND_NAME} ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not use the Service.`,
       'We reserve the right to modify these Terms at any time. Changes become effective immediately upon posting. Your continued use of the Service after any modification constitutes acceptance of the revised Terms.',
     ],
   },
@@ -21,7 +22,7 @@ const SECTIONS: LegalSection[] = [
     id: 'description',
     title: '2. Description of Service',
     paragraphs: [
-      'Invoicely is an online invoicing and payment management platform. We provide tools to create, send, and track invoices, manage clients, and process payments.',
+      `${BRAND_NAME} is an online invoicing and payment management platform. We provide tools to create, send, and track invoices, manage clients, and process payments.`,
       'The Service is provided on an "as is" and "as available" basis. We may update, modify, or discontinue features at any time without prior notice.',
     ],
   },
@@ -45,7 +46,7 @@ const SECTIONS: LegalSection[] = [
     id: 'ip',
     title: '5. Intellectual Property',
     paragraphs: [
-      'The Service and its original content, features, and functionality are and will remain the exclusive property of Invoicely and its licensors.',
+      `The Service and its original content, features, and functionality are and will remain the exclusive property of ${BRAND_NAME} and its licensors.`,
       'You retain ownership of all data, content, and materials you upload or create using the Service. You grant us a limited licence to host, display, and process such content solely to provide the Service to you.',
     ],
   },
@@ -53,7 +54,7 @@ const SECTIONS: LegalSection[] = [
     id: 'liability',
     title: '6. Limitation of Liability',
     paragraphs: [
-      'To the fullest extent permitted by law, Invoicely shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of your use of the Service.',
+      `To the fullest extent permitted by law, ${BRAND_NAME} shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of your use of the Service.`,
       'Our total liability to you for any claim arising from or related to the Service shall not exceed the amount you paid us in the twelve months prior to the event giving rise to the claim.',
     ],
   },

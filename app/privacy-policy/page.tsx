@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { TopNav } from '@/components/layout/TopNav'
 import { Footer } from '@/components/layout/Footer'
+import { BRAND_NAME } from '@/components/ui'
 
 interface LegalSection {
   id: string
@@ -30,7 +31,7 @@ const SECTIONS: LegalSection[] = [
     title: '3. Sharing of Information',
     paragraphs: [
       'We share data with trusted third-party service providers — such as payment processors and cloud hosting providers — solely to deliver the Service. All such providers are bound by confidentiality obligations.',
-      'We may disclose information if required by law, regulation, or valid legal process, or to protect the rights, property, or safety of Invoicely, our users, or the public.',
+      `We may disclose information if required by law, regulation, or valid legal process, or to protect the rights, property, or safety of ${BRAND_NAME}, our users, or the public.`,
     ],
   },
   {

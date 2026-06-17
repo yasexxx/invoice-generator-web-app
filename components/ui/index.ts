@@ -9,6 +9,7 @@ export { DataTable } from './DataTable/DataTable'
 export { ProgressSteps } from './ProgressSteps/ProgressSteps'
 
 export type { BrandProps, BrandSize } from './Brand/Brand'
+export { BRAND_NAME } from './Brand/Brand'
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button/Button'
 export type { CardProps, CardElevation } from './Card/Card'
 export type { InputProps, InputSize } from './Input/Input'

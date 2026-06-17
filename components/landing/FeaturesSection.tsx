@@ -1,3 +1,5 @@
+import { BRAND_NAME } from '@/components/ui'
+
 interface FeatureCardProps {
   icon: string
   title: string
@@ -46,7 +48,7 @@ export function FeaturesSection() {
           <span className="text-primary">master your cashflow</span>
         </h2>
         <p className="text-text-muted max-w-2xl mx-auto">
-          Focus on your craft, while Invoicely handles the logistics of getting you paid on
+          Focus on your craft, while {BRAND_NAME} handles the logistics of getting you paid on
           time, every time.
         </p>
       </div>

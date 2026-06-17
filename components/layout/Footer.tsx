@@ -1,5 +1,7 @@
 import Link from 'next/link'
-import { Brand } from '@/components/ui'
+import { Brand, BRAND_NAME } from '@/components/ui'
+
+const COPYRIGHT_YEAR = 2025
 
 interface FooterLink {
   label: string
@@ -77,7 +79,7 @@ function FooterCopyright() {
   return (
     <div className="max-w-[1200px] mx-auto px-lg mt-xl pt-lg border-t border-outline-variant/10 text-center md:text-left">
       <p className="label-sm text-text-muted">
-        © 2025 Invoicely. All rights reserved. Precision in every pixel.
+        © {COPYRIGHT_YEAR} {BRAND_NAME}. All rights reserved. Precision in every pixel.
       </p>
     </div>
   )

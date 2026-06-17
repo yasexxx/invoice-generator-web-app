@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { TopNav } from '@/components/layout/TopNav'
 import { Footer } from '@/components/layout/Footer'
+import { BRAND_NAME } from '@/components/ui'
 
 interface FAQ {
   question: string
@@ -19,9 +20,9 @@ const FAQ_CATEGORIES: FAQCategory[] = [
     icon: 'help',
     items: [
       {
-        question: 'What is Invoicely?',
+        question: `What is ${BRAND_NAME}?`,
         answer:
-          'Invoicely is a professional invoicing platform built for freelancers and growing businesses. Create, send, and track invoices in minutes — and get paid faster with automated payment reminders.',
+          `${BRAND_NAME} is a professional invoicing platform built for freelancers and growing businesses. Create, send, and track invoices in minutes — and get paid faster with automated payment reminders.`,
       },
       {
         question: 'Do I need a credit card to sign up?',
@@ -56,9 +57,9 @@ const FAQ_CATEGORIES: FAQCategory[] = [
           'Absolutely. Pro and Business plans include 10+ premium templates with full logo, color, and font customization. Business plan customers can request fully bespoke template designs.',
       },
       {
-        question: 'Does Invoicely integrate with accounting software?',
+        question: `Does ${BRAND_NAME} integrate with accounting software?`,
         answer:
-          'Invoicely integrates with QuickBooks, Xero, and FreshBooks. Business plan customers also get access to our full REST API for custom integrations.',
+          `${BRAND_NAME} integrates with QuickBooks, Xero, and FreshBooks. Business plan customers also get access to our full REST API for custom integrations.`,
       },
     ],
   },

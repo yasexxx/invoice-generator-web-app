@@ -1,4 +1,8 @@
 import Link from 'next/link'
+import { BRAND_NAME } from '@/components/ui'
+
+const SOCIAL_PROOF_COUNT = '10,000+'
+const TRIAL_DAYS = 14
 
 export function CTASection() {
   return (
@@ -25,8 +29,8 @@ function CTAContent() {
     <div className="relative z-10">
       <h2 className="display-lg mb-md">Ready to simplify your billing?</h2>
       <p className="text-text-muted mb-xl mx-auto">
-        Join 10,000+ businesses who have reclaimed their time with Invoicely. Start your
-        14-day free trial today.
+        Join {SOCIAL_PROOF_COUNT} businesses who have reclaimed their time with {BRAND_NAME}. Start your
+        {TRIAL_DAYS}-day free trial today.
       </p>
       <div className="flex flex-col sm:flex-row gap-md justify-center">
         <Link href="/register" className="bg-primary-container text-text-primary px-xl py-md rounded-lg font-bold text-lg active:scale-95 transition-all shadow-lg hover:brightness-110">

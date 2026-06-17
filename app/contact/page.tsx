@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { TopNav } from '@/components/layout/TopNav'
 import { Footer } from '@/components/layout/Footer'
 import { ContactForm } from '@/components/contact/ContactForm'
+import { BRAND_NAME } from '@/components/ui'
 
 interface Channel {
   icon: string
@@ -55,7 +56,7 @@ function ContactHero() {
         <span className="label-md text-primary mb-sm block">SUPPORT</span>
         <h1 className="display-lg mb-md">How can we help?</h1>
         <p className="body-lg text-text-muted mx-auto">
-          Our team is here to help you get the most out of Invoicely. Choose how to reach us below.
+          Our team is here to help you get the most out of {BRAND_NAME}. Choose how to reach us below.
         </p>
       </div>
     </section>
