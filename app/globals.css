@@ -209,3 +209,11 @@ a {
   line-height: 16px;
   letter-spacing: 0.05em;
 }
+
+.page-hero-glow {
+  background: radial-gradient(
+    circle at 50% 0%,
+    color-mix(in oklch, var(--color-primary-container) 18%, transparent) 0%,
+    transparent 60%
+  );
+}
