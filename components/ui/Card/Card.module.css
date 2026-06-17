@@ -1,0 +1,33 @@
+.card {
+  border-radius: var(--rounded-lg);
+  overflow: hidden;
+}
+
+/* ── Elevation levels (tonal layering, no heavy shadows) ── */
+
+/* Level 0 — canvas, no distinct surface */
+.elevation0 {
+  background: var(--color-background);
+}
+
+/* Level 1 — primary workspace modules / sidebars */
+.elevation1 {
+  background: var(--color-surface-container);
+}
+
+/* Level 2 — overlays / modals */
+.elevation2 {
+  background: var(--color-surface-elevated);
+  border: 1px solid color-mix(in srgb, var(--color-primary-container) 30%, transparent);
+  box-shadow: var(--shadow-modal);
+}
+
+/* ── Padding sizes ─────────────────────────────────────── */
+
+.sm {
+  padding: var(--spacing-md);
+}
+
+.lg {
+  padding: var(--spacing-lg);
+}

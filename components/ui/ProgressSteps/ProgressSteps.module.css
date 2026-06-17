@@ -1,0 +1,83 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── Individual step ──────────────────────────────────── */
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+}
+
+.step:last-child {
+  flex: 0 0 auto;
+}
+
+/* ── Indicator circle ─────────────────────────────────── */
+
+.indicator {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--rounded-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-jetbrains-mono);
+  font-size: 12px;
+  font-weight: 500;
+  border: 2px dashed var(--color-secondary-container);
+  color: var(--color-text-muted);
+  background: transparent;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.done .indicator {
+  background: var(--color-primary-container);
+  border-color: var(--color-primary-container);
+  border-style: solid;
+  color: var(--color-on-primary);
+}
+
+.active .indicator {
+  background: var(--color-primary-container);
+  border-color: var(--color-primary-container);
+  border-style: solid;
+  color: var(--color-on-primary);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-primary-container) 30%, transparent);
+}
+
+/* ── Label ────────────────────────────────────────────── */
+
+.label {
+  font-family: var(--font-inter);
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.done .label,
+.active .label {
+  color: var(--color-text-primary);
+}
+
+/* ── Connector line ───────────────────────────────────── */
+
+.connector {
+  flex: 1;
+  height: 2px;
+  background: transparent;
+  border-top: 2px dashed var(--color-secondary-container);
+  margin: 0 var(--spacing-sm);
+  min-width: var(--spacing-lg);
+}
+
+.connectorDone {
+  border-top-style: solid;
+  border-top-color: var(--color-primary-container);
+}

@@ -1,0 +1,48 @@
+.wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: var(--rounded-lg);
+  border: 1px solid var(--color-outline-variant);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* ── Header ───────────────────────────────────────────── */
+
+.th {
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-jetbrains-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: var(--color-surface-container-high);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+/* ── Rows ─────────────────────────────────────────────── */
+
+.tr:nth-child(even) {
+  background: color-mix(in srgb, var(--color-surface-container) 60%, transparent);
+}
+
+.tr:nth-child(odd) {
+  background: transparent;
+}
+
+.td {
+  padding: var(--spacing-sm) var(--spacing-md);
+  color: var(--color-on-surface);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-primary-container) 20%, transparent);
+}
+
+.tr:last-child .td {
+  border-bottom: none;
+}
