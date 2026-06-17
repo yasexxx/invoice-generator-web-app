@@ -13,9 +13,9 @@
   color: var(--color-text-muted);
 }
 
-/* ── Base input ───────────────────────────────────────── */
+/* ── Base textarea ────────────────────────────────────── */
 
-.input {
+.textarea {
   background: var(--color-surface-container);
   color: var(--color-on-surface);
   border: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
@@ -26,11 +26,11 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.input::placeholder {
+.textarea::placeholder {
   color: color-mix(in srgb, var(--color-text-muted) 60%, transparent);
 }
 
-.input:focus {
+.textarea:focus {
   border-color: var(--color-primary-container);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary-container) 25%, transparent);
 }
@@ -55,56 +55,20 @@
   line-height: 24px;
 }
 
+/* ── Resize variants ──────────────────────────────────── */
+
+.resizeNone     { resize: none; }
+.resizeVertical { resize: vertical; }
+.resizeBoth     { resize: both; }
+
 /* ── Error state ──────────────────────────────────────── */
 
-.inputError {
+.textareaError {
   border-color: var(--color-error);
 }
 
-.inputError:focus {
+.textareaError:focus {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-error) 25%, transparent);
-}
-
-/* ── Icon support ─────────────────────────────────────── */
-
-.inputContainer {
-  position: relative;
-}
-
-.icon {
-  position: absolute;
-  left: var(--spacing-md);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--color-on-surface-variant);
-  font-size: 20px;
-  line-height: 1;
-  pointer-events: none;
-  transition: color 0.2s ease;
-}
-
-.inputContainer:focus-within .icon {
-  color: var(--color-primary-container);
-}
-
-/* 16px left offset + 20px icon + 8px gap = 44px */
-.inputWithIcon {
-  padding-left: 44px;
-}
-
-/* ── Trailing slot ────────────────────────────────────── */
-
-.inputWithTrailing {
-  padding-right: 44px;
-}
-
-.trailing {
-  position: absolute;
-  right: var(--spacing-md);
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
 }
 
 /* ── Feedback text ────────────────────────────────────── */
