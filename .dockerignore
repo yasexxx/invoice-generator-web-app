@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.git/
+secrets/
+invoice-service/
+stitch_lumina_invoice_suite/
+.env*
+coverage/
+*.md
+.claude/

@@ -1,0 +1,66 @@
+services:
+  nextjs:
+    build:
+      context: .
+      target: runner
+    ports:
+      - "3000:3000"
+    environment:
+      INVOICE_API_URL: http://invoice-service:8080
+    depends_on:
+      invoice-service:
+        condition: service_healthy
+    networks:
+      - public
+      - internal
+    restart: unless-stopped
+
+  invoice-service:
+    build:
+      context: ./invoice-service
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+    secrets:
+      - db_user
+      - db_password
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - internal
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: invoicely
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "invoicely"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    secrets:
+      - db_user
+      - db_password
+
+networks:
+  public:
+    driver: bridge
+  internal:
+    driver: bridge
+    internal: true
+
+volumes:
+  postgres_data:
+
+secrets:
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: invoice-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+server:
+  port: 8080
+
+logging:
+  level:
+    com.invoicely: INFO

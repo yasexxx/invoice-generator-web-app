@@ -1,0 +1,26 @@
+services:
+  nextjs:
+    build:
+      target: deps
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      NODE_ENV: development
+    command: npm run dev
+
+  invoice-service:
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    environment:
+      JAVA_TOOL_OPTIONS: >-
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_USERNAME: invoicely
+      SPRING_DATASOURCE_PASSWORD: changeme
+
+  postgres:
+    ports:
+      - "5432:5432"
