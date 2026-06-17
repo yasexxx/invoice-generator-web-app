@@ -30,6 +30,21 @@ public class Invoice {
             BigDecimal taxPercent,
             BigDecimal discount,
             String notes) {
+        this(id, templateId, clientName, clientEmail, clientAddress,
+             lineItems, taxPercent, discount, notes, Instant.now());
+    }
+
+    private Invoice(
+            UUID id,
+            TemplateId templateId,
+            String clientName,
+            String clientEmail,
+            String clientAddress,
+            List<LineItem> lineItems,
+            BigDecimal taxPercent,
+            BigDecimal discount,
+            String notes,
+            Instant createdAt) {
         Objects.requireNonNull(id,          "id");
         Objects.requireNonNull(templateId,  "templateId");
         Objects.requireNonNull(clientEmail, "clientEmail");
@@ -48,7 +63,22 @@ public class Invoice {
         this.taxPercent    = taxPercent;
         this.discount      = discount;
         this.notes         = notes != null ? notes : "";
-        this.createdAt     = Instant.now();
+        this.createdAt     = createdAt;
+    }
+
+    public static Invoice reconstitute(
+            UUID id,
+            TemplateId templateId,
+            String clientName,
+            String clientEmail,
+            String clientAddress,
+            List<LineItem> lineItems,
+            BigDecimal taxPercent,
+            BigDecimal discount,
+            String notes,
+            Instant createdAt) {
+        return new Invoice(id, templateId, clientName, clientEmail, clientAddress,
+                           lineItems, taxPercent, discount, notes, createdAt);
     }
 
     public InvoiceTotals calculateTotals() {
@@ -65,14 +95,14 @@ public class Invoice {
         return new InvoiceTotals(subtotal, taxAmount, total);
     }
 
-    public UUID         id()            { return id; }
-    public TemplateId   templateId()    { return templateId; }
-    public String       clientName()    { return clientName; }
-    public String       clientEmail()   { return clientEmail; }
-    public String       clientAddress() { return clientAddress; }
-    public List<LineItem> lineItems()   { return lineItems; }
-    public BigDecimal   taxPercent()    { return taxPercent; }
-    public BigDecimal   discount()      { return discount; }
-    public String       notes()         { return notes; }
-    public Instant      createdAt()     { return createdAt; }
+    public UUID           id()            { return id; }
+    public TemplateId     templateId()    { return templateId; }
+    public String         clientName()    { return clientName; }
+    public String         clientEmail()   { return clientEmail; }
+    public String         clientAddress() { return clientAddress; }
+    public List<LineItem> lineItems()     { return lineItems; }
+    public BigDecimal     taxPercent()    { return taxPercent; }
+    public BigDecimal     discount()      { return discount; }
+    public String         notes()         { return notes; }
+    public Instant        createdAt()     { return createdAt; }
 }

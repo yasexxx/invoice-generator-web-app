@@ -1,6 +1,18 @@
 spring:
   application:
     name: invoice-service
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/invoicely}
+    username: ${SPRING_DATASOURCE_USERNAME:invoicely}
+    password: ${SPRING_DATASOURCE_PASSWORD:changeme}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+  flyway:
+    enabled: true
 
 management:
   endpoints:
