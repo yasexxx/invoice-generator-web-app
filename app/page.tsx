@@ -1,10 +1,23 @@
-import styles from "./page.module.css";
+import { TopNav }           from '@/components/layout/TopNav'
+import { Footer }            from '@/components/layout/Footer'
+import { HeroSection }       from '@/components/landing/HeroSection'
+import { SocialProofBanner } from '@/components/landing/SocialProofBanner'
+import { FeaturesSection }   from '@/components/landing/FeaturesSection'
+import { HowItWorksSection } from '@/components/landing/HowItWorksSection'
+import { CTASection }        from '@/components/landing/CTASection'
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+    <>
+      <TopNav />
+      <main className="pt-xxl">
+        <HeroSection />
+        <SocialProofBanner />
+        <FeaturesSection />
+        <HowItWorksSection />
+        <CTASection />
       </main>
-    </div>
-  );
+      <Footer />
+    </>
+  )
 }

@@ -24,8 +24,8 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Lumina Ledger',
-  description: 'Professional invoice generator',
+  title: 'Lumina Ledger — Professional Invoice Generator',
+  description: 'Generate professional invoices, track payments, and get paid faster.',
 }
 
 export default function RootLayout({
@@ -35,6 +35,14 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={fontVars}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+        />
+      </head>
       <body>
         <ThemeProvider>{children}</ThemeProvider>
       </body>

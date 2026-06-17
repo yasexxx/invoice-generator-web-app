@@ -1,4 +1,6 @@
 export { ThemeProvider } from './ThemeProvider'
+export { Brand } from './Brand/Brand'
+export type { BrandProps, BrandSize } from './Brand/Brand'
 export { Button } from './Button/Button'
 export { Card } from './Card/Card'
 export { Input } from './Input/Input'
