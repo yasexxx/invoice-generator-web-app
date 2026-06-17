@@ -44,3 +44,9 @@ secrets/
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Java
+**/target/
+*.class
+*.jar
+*.war
