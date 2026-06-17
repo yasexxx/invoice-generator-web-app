@@ -4,16 +4,17 @@ import { LineItemsEditor }    from './LineItemsEditor'
 import { TaxDiscountSection } from './TaxDiscountSection'
 import { NotesSection }       from './NotesSection'
 import type { EditorHandlers, InvoiceFormData } from '../invoice.types'
+import styles from './EditorPanel.module.css'
 
-interface EditorPanelProps {
+export interface EditorPanelProps {
   data:     InvoiceFormData
   handlers: EditorHandlers
 }
 
 export function EditorPanel({ data, handlers }: EditorPanelProps) {
   return (
-    <section className="lg:col-span-5 h-full overflow-y-auto custom-scrollbar border-r border-outline-variant/20 bg-surface-container-low p-lg">
-      <div className="max-w-xl mx-auto space-y-xl pb-xxl">
+    <section className={`${styles.panel} custom-scrollbar`}>
+      <div className={styles.content}>
         <EditorHeader />
 
         <TemplateSelector
@@ -50,9 +51,9 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
 
 function EditorHeader() {
   return (
-    <header>
+    <header className={styles.header}>
       <h1 className="headline-lg text-primary">Create Invoice</h1>
-      <p className="body-md text-text-muted mt-xs">
+      <p className="body-md text-text-muted">
         Complete the details below to generate your professional invoice.
       </p>
     </header>

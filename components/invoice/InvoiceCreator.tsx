@@ -1,15 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { EditorPanel }     from './editor/EditorPanel'
 import { PreviewPanel }    from './preview/PreviewPanel'
 import { InvoiceTopNav }   from './InvoiceTopNav'
 import { useInvoiceForm }  from './useInvoiceForm'
 import type { EditorHandlers } from './invoice.types'
+import styles from './InvoiceCreator.module.css'
 
 export function InvoiceCreator() {
   const { data, totals, ...hookHandlers } = useInvoiceForm()
-  const [saveStatus] = useState('All changes saved')
+  const saveStatus = 'All changes saved'
 
   const handlers: EditorHandlers = {
     onTemplateChange:  hookHandlers.onTemplateChange,
@@ -23,12 +23,12 @@ export function InvoiceCreator() {
   }
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className={styles.shell}>
       <InvoiceTopNav saveStatus={saveStatus} onSend={() => undefined} />
-      <div className="flex-1 grid lg:grid-cols-12 mt-xxl overflow-hidden">
+      <main className={styles.workspace}>
         <EditorPanel  data={data}   handlers={handlers} />
         <PreviewPanel data={data}   totals={totals} />
-      </div>
+      </main>
     </div>
   )
 }

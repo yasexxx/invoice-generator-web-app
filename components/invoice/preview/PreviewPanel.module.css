@@ -1,0 +1,87 @@
+.panel {
+  position: relative;
+  min-inline-size: 0;
+  inline-size: 100%;
+  max-inline-size: 100vw;
+  display: grid;
+  place-items: start center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--color-background);
+  overflow-x: auto;
+}
+
+.documentFrame {
+  position: relative;
+  z-index: 1;
+  inline-size: min(100%, calc(var(--spacing-xxl) * 12));
+  min-inline-size: calc(var(--spacing-xxl) * 7);
+}
+
+.previewBadge {
+  position: sticky;
+  inset-block-start: var(--spacing-md);
+  justify-self: end;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid color-mix(in srgb, var(--color-primary-container) 50%, transparent);
+  border-radius: var(--rounded-full);
+  background: color-mix(in srgb, var(--color-primary) 86%, transparent);
+  color: var(--color-on-primary-fixed);
+  font-family: var(--font-jetbrains-mono);
+  font-size: calc(var(--spacing-xs) * 3);
+  font-weight: 700;
+  line-height: calc(var(--spacing-xs) * 4);
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(var(--spacing-sm));
+}
+
+.previewBadge span {
+  font-size: calc(var(--spacing-xs) * 4);
+}
+
+.mobileControls {
+  position: sticky;
+  inset-block-end: var(--spacing-lg);
+  z-index: 2;
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.controlButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--spacing-xxl) + var(--spacing-sm));
+  block-size: calc(var(--spacing-xxl) + var(--spacing-sm));
+  border: 0;
+  border-radius: var(--rounded-full);
+  background: color-mix(in srgb, var(--color-surface-elevated) 94%, transparent);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-modal);
+  backdrop-filter: blur(var(--spacing-sm));
+  cursor: pointer;
+}
+
+@media (min-width: 1024px) {
+  .panel {
+    block-size: 100%;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .documentFrame {
+    inline-size: min(
+      calc(100% - var(--spacing-xl)),
+      calc((100svh - (var(--spacing-xxl) * 3.5)) / 1.414)
+    );
+    min-inline-size: 0;
+  }
+
+  .mobileControls {
+    display: none;
+  }
+}

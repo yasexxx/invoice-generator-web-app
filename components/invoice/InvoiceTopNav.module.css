@@ -1,0 +1,94 @@
+.nav {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 50;
+  inline-size: 100%;
+  max-inline-size: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  border-block-end: 1px solid color-mix(in srgb, var(--color-outline-variant) 45%, transparent);
+  backdrop-filter: blur(calc(var(--spacing-sm) * 1.5));
+}
+
+.navLeft,
+.navRight,
+.dashboardButton,
+.sendButton {
+  display: inline-flex;
+  align-items: center;
+}
+
+.navLeft {
+  gap: var(--spacing-xl);
+  min-inline-size: 0;
+}
+
+.navRight {
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  min-inline-size: 0;
+}
+
+.dashboardButton {
+  gap: var(--spacing-xs);
+  color: var(--color-on-surface-variant);
+  font-weight: 500;
+  transition: color 150ms ease;
+}
+
+.dashboardButton:hover {
+  color: var(--color-primary);
+}
+
+.saveStatus {
+  font-family: var(--font-jetbrains-mono);
+  font-size: calc(var(--spacing-xs) * 3.5);
+  font-weight: 500;
+  line-height: calc(var(--spacing-xs) * 5);
+  letter-spacing: 0.05em;
+  color: var(--color-on-surface-variant);
+  white-space: nowrap;
+}
+
+.sendButton {
+  justify-content: center;
+  min-block-size: calc(var(--spacing-xxl) - var(--spacing-sm));
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 0;
+  border-radius: var(--rounded-default);
+  background: var(--color-primary-container);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: filter 150ms ease, transform 150ms ease;
+}
+
+.sendButton:hover {
+  filter: brightness(1.1);
+}
+
+.sendButton:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 767px) {
+  .nav {
+    padding-inline: var(--spacing-md);
+  }
+
+  .dashboardButton,
+  .saveStatus {
+    display: none;
+  }
+
+  .sendButton {
+    padding-inline: var(--spacing-md);
+    min-inline-size: 0;
+  }
+}

@@ -1,13 +1,14 @@
 import { Brand } from '@/components/ui'
+import styles from './InvoiceTopNav.module.css'
 
-interface InvoiceTopNavProps {
+export interface InvoiceTopNavProps {
   saveStatus: string
   onSend: () => void
 }
 
 export function InvoiceTopNav({ saveStatus, onSend }: InvoiceTopNavProps) {
   return (
-    <nav className="fixed top-0 w-full z-50 flex justify-between items-center px-lg py-md bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm">
+    <nav className={styles.nav}>
       <NavLeft />
       <NavRight saveStatus={saveStatus} onSend={onSend} />
     </nav>
@@ -16,28 +17,29 @@ export function InvoiceTopNav({ saveStatus, onSend }: InvoiceTopNavProps) {
 
 function NavLeft() {
   return (
-    <div className="flex items-center gap-xl">
+    <div className={styles.navLeft}>
       <Brand showIcon />
-      <button className="hidden md:flex items-center gap-1 text-on-surface-variant font-medium hover:text-primary transition-colors duration-200">
-        <span className="material-symbols-outlined text-[20px]">arrow_back</span>
+      <button type="button" className={styles.dashboardButton}>
+        <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
         Dashboard
       </button>
     </div>
   )
 }
 
-interface NavRightProps {
+export interface NavRightProps {
   saveStatus: string
   onSend: () => void
 }
 
 function NavRight({ saveStatus, onSend }: NavRightProps) {
   return (
-    <div className="flex items-center gap-md">
-      <span className="hidden md:block label-md text-on-surface-variant">{saveStatus}</span>
+    <div className={styles.navRight}>
+      <span className={styles.saveStatus}>{saveStatus}</span>
       <button
+        type="button"
         onClick={onSend}
-        className="bg-primary-container text-text-primary px-lg py-sm rounded-lg font-semibold hover:brightness-110 active:scale-95 transition-transform"
+        className={styles.sendButton}
       >
         Send Invoice
       </button>

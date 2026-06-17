@@ -1,4 +1,5 @@
 import type { TemplateId } from '../invoice.types'
+import styles from './TemplateSelector.module.css'
 
 interface Template {
   id: TemplateId
@@ -21,17 +22,17 @@ interface TemplateSelectorProps {
 
 export function TemplateSelector({ selected, onChange }: TemplateSelectorProps) {
   return (
-    <div className="space-y-md">
-      <div className="flex items-center justify-between text-primary">
-        <div className="flex items-center gap-sm">
-          <span className="material-symbols-outlined">palette</span>
+    <div className={styles.selector}>
+      <div className={styles.header}>
+        <div className={styles.title}>
+          <span className="material-symbols-outlined" aria-hidden="true">palette</span>
           <h2 className="title-md">Template Style</h2>
         </div>
-        <span className="label-sm text-text-muted uppercase tracking-widest">
+        <span className={styles.meta}>
           {TEMPLATES.length} Styles Available
         </span>
       </div>
-      <div className="grid grid-cols-2 gap-md">
+      <div className={styles.grid}>
         {TEMPLATES.map((t) => (
           <TemplateCard key={t.id} template={t} isSelected={selected === t.id} onSelect={onChange} />
         ))}
@@ -51,23 +52,22 @@ function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
 
   return (
     <button
+      type="button"
       onClick={() => onSelect(id)}
-      className={`relative group flex flex-col gap-sm text-left transition-opacity ${
-        isSelected ? '' : 'opacity-60 hover:opacity-100'
-      }`}
+      className={`${styles.card} ${isSelected ? styles.selectedCard : styles.unselectedCard}`}
     >
       <div
-        className={`aspect-[1/1.414] w-full rounded border-2 overflow-hidden transition-all ${previewClass} ${
+        className={`${styles.preview} ${previewClass} ${
           isSelected
-            ? 'border-primary ring-2 ring-primary/20'
-            : 'border-outline-variant/30 group-hover:border-primary/50'
+            ? styles.selectedPreview
+            : styles.unselectedPreview
         }`}
       />
-      <div className="flex justify-between items-center">
-        <span className={`label-sm font-bold ${isSelected ? 'text-primary' : 'text-on-surface-variant'}`}>
+      <div className={styles.cardFooter}>
+        <span className={`${styles.cardLabel} ${isSelected ? styles.selectedLabel : styles.unselectedLabel}`}>
           {label}
         </span>
-        {isPro ? <ProBadge /> : <span className="label-sm text-text-muted">Free</span>}
+        {isPro ? <ProBadge /> : <span className={styles.freeLabel}>Free</span>}
       </div>
       {isSelected && <SelectedCheck />}
     </button>
@@ -76,17 +76,17 @@ function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
 
 function ProBadge() {
   return (
-    <div className="flex items-center gap-xs bg-tertiary-container/30 text-tertiary px-xs rounded">
-      <span className="material-symbols-outlined text-[10px]">crown</span>
-      <span className="text-[8px] font-bold uppercase">PRO</span>
+    <div className={styles.proBadge}>
+      <span className="material-symbols-outlined" aria-hidden="true">crown</span>
+      <span>PRO</span>
     </div>
   )
 }
 
 function SelectedCheck() {
   return (
-    <div className="absolute -top-2 -right-2 bg-primary text-on-primary-fixed rounded-full p-0.5">
-      <span className="material-symbols-outlined text-[14px] block">check</span>
+    <div className={styles.selectedCheck}>
+      <span className="material-symbols-outlined" aria-hidden="true">check</span>
     </div>
   )
 }

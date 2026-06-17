@@ -1,0 +1,33 @@
+.shell {
+  min-block-size: 100svh;
+  inline-size: 100%;
+  max-inline-size: 100vw;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+  overflow-x: clip;
+}
+
+.workspace {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  inline-size: 100%;
+  max-inline-size: 100vw;
+  min-block-size: 0;
+  overflow-x: clip;
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    block-size: 100svh;
+    overflow: hidden;
+  }
+
+  .workspace {
+    grid-template-columns:
+      minmax(calc(var(--spacing-xxl) * 10), calc(var(--spacing-xxl) * 12.5))
+      minmax(0, 1fr);
+    overflow: hidden;
+  }
+}
