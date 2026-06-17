@@ -1,19 +1,38 @@
+import Link from 'next/link'
 import { Brand } from '@/components/ui'
 
-const FOOTER_COLS = [
+interface FooterLink {
+  label: string
+  href: string
+}
+
+interface FooterCol {
+  heading: string
+  links: FooterLink[]
+}
+
+const FOOTER_COLS: FooterCol[] = [
   {
-    heading: 'Product',
-    links: [{ label: 'Terms of Service' }, { label: 'Privacy Policy' }],
+    heading: 'Company',
+    links: [
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'FAQs', href: '/faqs' },
+    ],
+  },
+  {
+    heading: 'Legal',
+    links: [
+      { label: 'Terms of Service', href: '/terms' },
+      { label: 'Privacy Policy', href: '/privacy' },
+    ],
   },
   {
     heading: 'Support',
-    links: [{ label: 'Contact Support' }, { label: 'API Documentation' }],
+    links: [
+      { label: 'Contact Support', href: '/contact' },
+    ],
   },
-  {
-    heading: 'Settings',
-    links: [{ label: 'Cookie Settings' }],
-  },
-] as const
+]
 
 export function Footer() {
   return (
@@ -39,14 +58,14 @@ function FooterLinks() {
       {FOOTER_COLS.map(({ heading, links }) => (
         <div key={heading} className="flex flex-col gap-sm">
           <span className="text-on-surface font-bold text-sm">{heading}</span>
-          {links.map(({ label }) => (
-            <a
+          {links.map(({ label, href }) => (
+            <Link
               key={label}
-              href="#"
+              href={href}
               className="label-sm text-text-muted hover:text-secondary transition-colors"
             >
               {label}
-            </a>
+            </Link>
           ))}
         </div>
       ))}
@@ -58,7 +77,7 @@ function FooterCopyright() {
   return (
     <div className="max-w-[1200px] mx-auto px-lg mt-xl pt-lg border-t border-outline-variant/10 text-center md:text-left">
       <p className="label-sm text-text-muted">
-        © 2024 Invoicely SaaS. All rights reserved. Precision in every pixel.
+        © 2025 Invoicely. All rights reserved. Precision in every pixel.
       </p>
     </div>
   )
