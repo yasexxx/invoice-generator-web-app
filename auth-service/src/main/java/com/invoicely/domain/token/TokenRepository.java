@@ -17,4 +17,10 @@ public interface TokenRepository {
     Optional<PasswordResetToken> findPasswordResetTokenByHash(String tokenHash);
 
     void revokePasswordResetTokensForUser(UserId userId);
+
+    void saveRefreshToken(RefreshToken token);
+
+    Optional<RefreshToken> findRefreshTokenByHash(String tokenHash);
+
+    void revokeAllRefreshTokensForUser(UserId userId);
 }

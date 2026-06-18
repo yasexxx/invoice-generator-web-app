@@ -17,18 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class AuthApplicationService implements RegisterUserUseCase, VerifyEmailUseCase {
-
-    private static final String SHA_256 = "SHA-256";
 
     private final UserRepository      userRepository;
     private final TokenRepository     tokenRepository;
@@ -54,7 +48,7 @@ public class AuthApplicationService implements RegisterUserUseCase, VerifyEmailU
         User saved = userRepository.save(user);
 
         String rawToken  = tokenGeneratorPort.generateSecureToken();
-        String tokenHash = sha256(rawToken);
+        String tokenHash = TokenHasher.sha256(rawToken);
         tokenRepository.saveVerificationToken(new VerificationToken(tokenHash, saved.id()));
 
         emailPort.sendVerification(email, rawToken);
@@ -66,7 +60,7 @@ public class AuthApplicationService implements RegisterUserUseCase, VerifyEmailU
     public void execute(VerifyEmailCommand command) {
         log.debug("[APP] Verifying email token");
 
-        String tokenHash = sha256(command.rawToken());
+        String tokenHash = TokenHasher.sha256(command.rawToken());
         VerificationToken vt = tokenRepository.findVerificationTokenByHash(tokenHash)
                 .orElseThrow(() -> new InvalidTokenException("Token not found"));
 
@@ -88,13 +82,4 @@ public class AuthApplicationService implements RegisterUserUseCase, VerifyEmailU
         log.info("[APP] Email verified for user id={}", verified.id().value());
     }
 
-    private static String sha256(String input) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance(SHA_256);
-            byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            return HexFormat.of().formatHex(hash);
-        } catch (NoSuchAlgorithmException e) {
-            throw new IllegalStateException("SHA-256 algorithm not available", e);
-        }
-    }
 }

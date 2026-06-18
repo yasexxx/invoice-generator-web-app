@@ -1,6 +1,7 @@
 package com.invoicely.infrastructure.persistence;
 
 import com.invoicely.domain.token.PasswordResetToken;
+import com.invoicely.domain.token.RefreshToken;
 import com.invoicely.domain.token.TokenRepository;
 import com.invoicely.domain.token.VerificationToken;
 import com.invoicely.domain.user.UserId;
@@ -17,6 +18,7 @@ public class TokenRepositoryAdapter implements TokenRepository {
 
     private final VerificationTokenJpaRepository  verificationJpaRepository;
     private final PasswordResetTokenJpaRepository resetJpaRepository;
+    private final RefreshTokenJpaRepository       refreshJpaRepository;
 
     @Override
     public void saveVerificationToken(VerificationToken token) {
@@ -52,5 +54,23 @@ public class TokenRepositoryAdapter implements TokenRepository {
     public void revokePasswordResetTokensForUser(UserId userId) {
         log.debug("[REPO] Revoking password reset tokens for userId={}", userId.value());
         resetJpaRepository.deleteByUserId(userId.value());
+    }
+
+    @Override
+    public void saveRefreshToken(RefreshToken token) {
+        log.debug("[REPO] Saving refresh token for userId={}", token.userId().value());
+        refreshJpaRepository.save(TokenMapper.toEntity(token));
+    }
+
+    @Override
+    public Optional<RefreshToken> findRefreshTokenByHash(String tokenHash) {
+        return refreshJpaRepository.findById(tokenHash)
+                .map(TokenMapper::toRefreshDomain);
+    }
+
+    @Override
+    public void revokeAllRefreshTokensForUser(UserId userId) {
+        log.debug("[REPO] Revoking all refresh tokens for userId={}", userId.value());
+        refreshJpaRepository.deleteByUserId(userId.value());
     }
 }

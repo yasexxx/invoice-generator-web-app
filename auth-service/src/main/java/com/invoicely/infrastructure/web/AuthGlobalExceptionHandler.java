@@ -1,6 +1,8 @@
 package com.invoicely.infrastructure.web;
 
 import com.invoicely.application.auth.EmailAlreadyRegisteredException;
+import com.invoicely.application.auth.EmailNotVerifiedException;
+import com.invoicely.application.auth.InvalidCredentialsException;
 import com.invoicely.application.auth.InvalidTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,20 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 @Slf4j
 public class AuthGlobalExceptionHandler {
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ProblemDetail handleInvalidCredentials(InvalidCredentialsException ex) {
+        log.warn("[WEB] Invalid credentials");
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ProblemDetail handleEmailNotVerified(EmailNotVerifiedException ex) {
+        log.warn("[WEB] Login rejected: email not verified");
+        return ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
 
     @ExceptionHandler(EmailAlreadyRegisteredException.class)
     @ResponseStatus(HttpStatus.CONFLICT)

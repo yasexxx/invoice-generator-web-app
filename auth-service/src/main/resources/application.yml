@@ -42,6 +42,10 @@ app:
     from: ${APP_MAIL_FROM:noreply@invoicely.com}
   base-url: ${APP_BASE_URL:http://localhost:8081}
 
+jwt:
+  secret: ${JWT_SECRET:ZGV2LW9ubHktc2VjcmV0LWtleS1mb3ItaW52b2ljZWx5LWF1dGgtMjAyNA==}
+  access-token-expiry-seconds: ${JWT_ACCESS_TOKEN_EXPIRY_SECONDS:900}
+
 logging:
   level:
     com.invoicely: INFO
