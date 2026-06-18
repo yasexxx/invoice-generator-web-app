@@ -3,6 +3,7 @@ node_modules/
 .git/
 secrets/
 invoice-service/
+auth-service/
 stitch_lumina_invoice_suite/
 .env*
 coverage/

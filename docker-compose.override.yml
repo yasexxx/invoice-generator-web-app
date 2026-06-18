@@ -8,9 +8,25 @@ services:
       - /app/.next
     environment:
       NODE_ENV: development
-    command: npm run dev
+    command: npm run dev -- --hostname 0.0.0.0
+
+  auth-service:
+    networks:
+      - public
+      - internal
+    ports:
+      - "8081:8081"
+    environment:
+      JAVA_TOOL_OPTIONS: >-
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006
+      SPRING_PROFILES_ACTIVE: dev
+      MAIL_HOST: mailhog
+      MAIL_PORT: "1025"
 
   invoice-service:
+    networks:
+      - public
+      - internal
     ports:
       - "8080:8080"
       - "5005:5005"
@@ -18,9 +34,26 @@ services:
       JAVA_TOOL_OPTIONS: >-
         -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       SPRING_PROFILES_ACTIVE: dev
-      SPRING_DATASOURCE_USERNAME: invoicely
-      SPRING_DATASOURCE_PASSWORD: changeme
 
   postgres:
+    networks:
+      - public
+      - internal
     ports:
       - "5432:5432"
+
+  postgres-auth:
+    networks:
+      - public
+      - internal
+    ports:
+      - "5433:5432"
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    networks:
+      - public
+      - internal
+    ports:
+      - "1025:1025"
+      - "8025:8025"
