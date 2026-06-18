@@ -1,3 +1,4 @@
+import Link            from 'next/link'
 import { BRAND_NAME } from '@/components/ui'
 
 const AUTH_FOOTER_LINKS = ['Privacy Policy', 'Terms of Service', 'Help Center'] as const
@@ -9,13 +10,13 @@ export function AuthFooter() {
       <p className="label-sm text-text-muted">© {COPYRIGHT_YEAR} {BRAND_NAME} SaaS. All rights reserved.</p>
       <nav className="flex gap-lg">
         {AUTH_FOOTER_LINKS.map((label) => (
-          <a
+          <Link
             key={label}
             href="#"
             className="label-sm text-text-muted hover:text-primary transition-colors"
           >
             {label}
-          </a>
+          </Link>
         ))}
       </nav>
     </footer>

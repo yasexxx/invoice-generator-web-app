@@ -1,3 +1,4 @@
+import Link                  from 'next/link'
 import { AuthHeader }       from '@/components/auth/AuthHeader'
 import { AuthFooter }       from '@/components/auth/AuthFooter'
 import { ResetPasswordForm } from '@/components/auth/ResetPasswordForm'
@@ -42,9 +43,9 @@ function InvalidLinkPanel() {
           This link is missing a reset token. Please request a new password reset.
         </p>
       </div>
-      <a href="/forgot-password" className="label-sm text-primary hover:underline">
+      <Link href="/forgot-password" className="label-sm text-primary hover:underline">
         Request a new reset link
-      </a>
+      </Link>
     </div>
   )
 }

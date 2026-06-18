@@ -1,3 +1,4 @@
+import Link            from 'next/link'
 import { AuthHeader }  from '@/components/auth/AuthHeader'
 import { AuthFooter }  from '@/components/auth/AuthFooter'
 import { LoginForm }   from '@/components/auth/LoginForm'
@@ -11,12 +12,12 @@ export default function LoginPage() {
         <LoginForm />
         <p className="mt-xl text-center body-md text-on-surface-variant">
           Don&apos;t have an account?{' '}
-          <a
+          <Link
             href="/register"
             className="text-primary font-semibold hover:underline decoration-primary/50 underline-offset-4 ml-xs"
           >
             Sign up
-          </a>
+          </Link>
         </p>
       </main>
       <AuthFooter />

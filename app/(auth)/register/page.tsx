@@ -1,5 +1,6 @@
-import { Brand } from '@/components/ui'
-import { AuthFooter }     from '@/components/auth/AuthFooter'
+import Link             from 'next/link'
+import { Brand }        from '@/components/ui'
+import { AuthFooter }   from '@/components/auth/AuthFooter'
 import { ValuePropPanel }  from '@/components/auth/ValuePropPanel'
 import { RegisterForm }    from '@/components/auth/RegisterForm'
 
@@ -32,9 +33,9 @@ function RegisterHeader() {
   return (
     <header className="relative z-50 flex items-center justify-between px-lg py-md max-w-[1200px] mx-auto">
       <Brand showIcon />
-      <a className="label-md text-on-surface-variant hover:text-primary transition-colors" href="#">
+      <Link href="contact" className="label-md text-on-surface-variant hover:text-primary transition-colors">
         Help Center
-      </a>
+      </Link>
     </header>
   )
 }

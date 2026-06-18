@@ -1,7 +1,8 @@
 'use client'
 
 import { useActionState, useState } from 'react'
-import { Button, Input } from '@/components/ui'
+import Link                          from 'next/link'
+import { Button, Input }             from '@/components/ui'
 import { SocialAuthButtons } from './SocialAuthButtons'
 import { loginAction }    from '@/lib/auth/actions'
 import { INITIAL_ERROR } from '@/lib/auth/types'
@@ -56,9 +57,9 @@ function PasswordFieldRow({ showPassword, onToggle }: PasswordFieldRowProps) {
     <div className="flex flex-col gap-xs">
       <div className="flex justify-between items-center">
         <label className="label-md text-text-muted" htmlFor="login-password">Password</label>
-        <a href="/forgot-password" className="label-sm text-primary hover:text-secondary transition-colors">
+        <Link href="/forgot-password" className="label-sm text-primary hover:text-secondary transition-colors">
           Forgot password?
-        </a>
+        </Link>
       </div>
       <Input
         name="password"

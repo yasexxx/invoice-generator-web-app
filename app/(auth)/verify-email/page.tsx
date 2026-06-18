@@ -1,3 +1,4 @@
+import Link               from 'next/link'
 import { AuthHeader }    from '@/components/auth/AuthHeader'
 import { AuthFooter }    from '@/components/auth/AuthFooter'
 import { Brand }         from '@/components/ui'
@@ -49,9 +50,9 @@ function CheckInboxPanel() {
       <p className="label-sm text-on-surface-variant/70">
         Didn&apos;t receive it? Check your spam folder.
       </p>
-      <a href="/login" className="label-sm text-primary hover:underline">
+      <Link href="/login" className="label-sm text-primary hover:underline">
         Back to login
-      </a>
+      </Link>
     </div>
   )
 }
@@ -66,12 +67,12 @@ function VerifiedPanel() {
           Your account is now active. Log in to get started.
         </p>
       </div>
-      <a
+      <Link
         href="/login"
         className="label-md text-primary font-semibold hover:underline"
       >
         Log in now
-      </a>
+      </Link>
     </div>
   )
 }
@@ -87,12 +88,12 @@ function VerificationErrorPanel({ message }: VerificationErrorPanelProps) {
         <p className="body-md text-on-surface-variant">{message}</p>
       </div>
       <div className="flex flex-col gap-sm">
-        <a href="/register" className="label-sm text-primary hover:underline">
+        <Link href="/register" className="label-sm text-primary hover:underline">
           Register again
-        </a>
-        <a href="/login" className="label-sm text-on-surface-variant hover:underline">
+        </Link>
+        <Link href="/login" className="label-sm text-on-surface-variant hover:underline">
           Back to login
-        </a>
+        </Link>
       </div>
     </div>
   )

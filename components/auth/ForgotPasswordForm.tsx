@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import Link               from 'next/link'
 import { Button, Input } from '@/components/ui'
 import { forgotPasswordAction } from '@/lib/auth/actions'
 import { INITIAL_ERROR }        from '@/lib/auth/types'
@@ -32,9 +33,9 @@ export function ForgotPasswordForm() {
       <Button type="submit" size="lg" className="w-full" disabled={isPending}>
         {isPending ? 'Sending…' : 'Send Reset Link'}
       </Button>
-      <a href="/login" className="label-sm text-primary text-center hover:underline">
+      <Link href="/login" className="label-sm text-primary text-center hover:underline">
         Back to login
-      </a>
+      </Link>
     </form>
   )
 }
@@ -60,9 +61,9 @@ function SuccessPanel() {
           If an account exists for that email, you&apos;ll receive a reset link within a few minutes.
         </p>
       </div>
-      <a href="/login" className="label-sm text-primary hover:underline">
+      <Link href="/login" className="label-sm text-primary hover:underline">
         Back to login
-      </a>
+      </Link>
     </div>
   )
 }
