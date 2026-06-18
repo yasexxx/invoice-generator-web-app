@@ -1,4 +1,6 @@
 export { ThemeProvider } from './ThemeProvider'
+export { BackLink } from './BackLink/BackLink'
+export type { BackLinkProps } from './BackLink/BackLink'
 export { Brand } from './Brand/Brand'
 export { Button } from './Button/Button'
 export { Card } from './Card/Card'

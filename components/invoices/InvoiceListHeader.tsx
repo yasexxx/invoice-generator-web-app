@@ -1,15 +1,10 @@
 import Link from 'next/link'
+import { BackLink } from '@/components/ui'
 
 export function InvoiceListHeader() {
   return (
     <div className="mb-xl">
-      <Link
-        href="/dashboard"
-        className="inline-flex items-center gap-xs label-sm text-on-surface-variant hover:text-primary transition-colors mb-md"
-      >
-        <span className="material-symbols-outlined text-[16px]">arrow_back</span>
-        Dashboard
-      </Link>
+      <BackLink href="/dashboard" label="Dashboard" />
       <div className="flex items-start justify-between gap-md">
         <div>
           <h1 className="headline-lg text-on-surface">Invoices</h1>

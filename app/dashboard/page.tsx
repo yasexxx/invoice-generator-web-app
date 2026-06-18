@@ -69,9 +69,9 @@ function ActionCard({ icon, title, description, href }: ActionCardProps) {
   return (
     <Link
       href={href}
-      className="glass-card rounded-xl p-lg flex flex-col gap-sm hover:ring-1 hover:ring-primary/30 transition-all group"
+      className="glass-card rounded-xl p-lg flex flex-col gap-sm hover:ring-1 hover:ring-primary/30 hover:scale-[1.03] hover:-translate-y-1 transition-all duration-200 group"
     >
-      <span className="material-symbols-outlined text-[32px] text-primary group-hover:scale-110 transition-transform">
+      <span className="material-symbols-outlined text-[32px] text-primary group-hover:scale-98 transition-transform">
         {icon}
       </span>
       <div>

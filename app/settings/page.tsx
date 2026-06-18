@@ -1,5 +1,5 @@
-import Link                    from 'next/link'
 import { getUserEmail }        from '@/lib/auth/session'
+import { BackLink }            from '@/components/ui'
 import { DashboardNav }       from '@/components/dashboard/DashboardNav'
 import { ProfileSection }     from '@/components/settings/ProfileSection'
 import { ChangePasswordForm } from '@/components/settings/ChangePasswordForm'
@@ -24,13 +24,7 @@ export default async function SettingsPage() {
 function SettingsHeader() {
   return (
     <div className="mb-xl flex flex-col gap-xs">
-      <Link
-        href="/dashboard"
-        className="inline-flex items-center gap-xs self-start font-medium text-on-surface-variant no-underline transition-colors hover:text-primary"
-      >
-        <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
-        Dashboard
-      </Link>
+      <BackLink href="/dashboard" label="Dashboard" />
       <h1 className="headline-lg text-on-surface">Account Settings</h1>
       <p className="body-md text-on-surface-variant">
         Manage your profile and security preferences.
