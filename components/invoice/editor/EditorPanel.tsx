@@ -1,11 +1,13 @@
 import { BackLink }             from '@/components/ui'
 import { TemplateSelector }     from './TemplateSelector'
+import { PaperSizeSelector }    from './PaperSizeSelector'
 import { InvoiceDetailsSection } from './InvoiceDetailsSection'
 import { IssuerInfoSection }    from './IssuerInfoSection'
 import { ClientInfoSection }    from './ClientInfoSection'
 import { LineItemsEditor }      from './LineItemsEditor'
 import { TaxDiscountSection }   from './TaxDiscountSection'
 import { NotesSection }         from './NotesSection'
+import { SignatureSection }     from './SignatureSection'
 import type { EditorHandlers, InvoiceFormData } from '../invoice.types'
 import styles from './EditorPanel.module.css'
 
@@ -25,9 +27,17 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
           onChange={handlers.onTemplateChange}
         />
 
+        <PaperSizeSelector
+          selected={data.paperSize}
+          onChange={handlers.onPaperSizeChange}
+        />
+
         <InvoiceDetailsSection
           invoiceNumber={data.invoiceNumber}
-          onChange={handlers.onInvoiceNumberChange}
+          issuedDate={data.issuedDate}
+          dueDate={data.dueDate}
+          onInvoiceNumberChange={handlers.onInvoiceNumberChange}
+          onDateChange={handlers.onDateChange}
         />
 
         <IssuerInfoSection
@@ -58,6 +68,8 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
         />
 
         <NotesSection notes={data.notes} onChange={handlers.onNotesChange} />
+
+        <SignatureSection signature={data.signature} onChange={handlers.onSignatureChange} />
       </div>
     </section>
   )

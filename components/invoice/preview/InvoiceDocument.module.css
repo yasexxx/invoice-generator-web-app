@@ -1,11 +1,16 @@
-.document {
+.page {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  aspect-ratio: 1 / 1.414;
   background: var(--doc-bg);
+  font-family: var(--doc-font-family, var(--font-sans));
+  border-top: var(--doc-top-accent-border, none);
   transition: background-color 300ms ease;
 }
+
+.page[data-paper="a4"]     { aspect-ratio: 1 / 1.4142; }
+.page[data-paper="letter"] { aspect-ratio: 1 / 1.2941; }
+.page[data-paper="legal"]  { aspect-ratio: 1 / 1.6471; }
 
 .headerBar {
   flex-shrink: 0;
@@ -15,6 +20,17 @@
   padding: var(--spacing-lg) 40px;
   background: var(--doc-header-bar-bg);
   transition: background-color 300ms ease;
+}
+
+.continuationBar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 40px;
+  background: var(--doc-header-bar-bg);
+  border-bottom: 1px solid var(--doc-border);
+  transition: background-color 300ms ease, border-color 300ms ease;
 }
 
 .body {

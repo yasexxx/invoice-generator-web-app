@@ -20,15 +20,18 @@ export function InvoiceCreator() {
 
   const handlers: EditorHandlers = {
     onTemplateChange:      hookHandlers.onTemplateChange,
+    onPaperSizeChange:     hookHandlers.onPaperSizeChange,
     onInvoiceNumberChange: hookHandlers.onInvoiceNumberChange,
+    onDateChange:          hookHandlers.onDateChange,
     onIssuerChange:        hookHandlers.onIssuerChange,
     onClientChange:        hookHandlers.onClientChange,
-    onAddLineItem:     hookHandlers.onAddLineItem,
-    onUpdateLineItem:  hookHandlers.onUpdateLineItem,
-    onRemoveLineItem:  hookHandlers.onRemoveLineItem,
-    onTaxChange:       hookHandlers.onTaxChange,
-    onDiscountChange:  hookHandlers.onDiscountChange,
-    onNotesChange:     hookHandlers.onNotesChange,
+    onAddLineItem:       hookHandlers.onAddLineItem,
+    onUpdateLineItem:    hookHandlers.onUpdateLineItem,
+    onRemoveLineItem:    hookHandlers.onRemoveLineItem,
+    onTaxChange:         hookHandlers.onTaxChange,
+    onDiscountChange:    hookHandlers.onDiscountChange,
+    onNotesChange:       hookHandlers.onNotesChange,
+    onSignatureChange:   hookHandlers.onSignatureChange,
   }
 
   function handleSend() {

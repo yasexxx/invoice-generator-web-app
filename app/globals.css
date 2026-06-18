@@ -9,6 +9,7 @@
   --font-sans:    var(--font-inter), system-ui, sans-serif;
   --font-display: var(--font-hanken-grotesk), sans-serif;
   --font-mono:    var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-serif:   Georgia, 'Times New Roman', serif;
 
   /* Surface scale */
   --color-background:                 #100e34;
@@ -222,14 +223,18 @@ a {
 /* Applied to the .invoice-document wrapper; all doc-* vars cascade to children. */
 
 .invoice-theme-minimalist {
-  --doc-bg:              #ffffff;
-  --doc-header-bar-bg:   transparent;
-  --doc-header-bar-text: #111827;
-  --doc-title-text:      #111827;
-  --doc-body-text:       #374151;
-  --doc-muted-text:      #9ca3af;
-  --doc-accent:          #6366f1;
-  --doc-border:          #f3f4f6;
+  --doc-bg:                 #ffffff;
+  --doc-header-bar-bg:      transparent;
+  --doc-header-bar-text:    #111827;
+  --doc-title-text:         #111827;
+  --doc-body-text:          #374151;
+  --doc-muted-text:         #9ca3af;
+  --doc-accent:             #6366f1;
+  --doc-border:             #e5e7eb;
+  --doc-font-family:        var(--font-sans);
+  --doc-top-accent-border:  3px solid #6366f1;
+  --doc-heading-weight:     700;
+  --doc-label-spacing:      0.12em;
 }
 
 .invoice-theme-corporate {
@@ -255,12 +260,16 @@ a {
 }
 
 .invoice-theme-classic {
-  --doc-bg:              #faf9f7;
-  --doc-header-bar-bg:   transparent;
-  --doc-header-bar-text: #3d2b1f;
-  --doc-title-text:      #3d2b1f;
-  --doc-body-text:       #44403c;
-  --doc-muted-text:      #a8a29e;
-  --doc-accent:          #15803d;
-  --doc-border:          #e7e5e4;
+  --doc-bg:                 #faf9f7;
+  --doc-header-bar-bg:      #3d2b1f;
+  --doc-header-bar-text:    #f5ede4;
+  --doc-title-text:         #3d2b1f;
+  --doc-body-text:          #44403c;
+  --doc-muted-text:         #a8a29e;
+  --doc-accent:             #15803d;
+  --doc-border:             #d6cfc9;
+  --doc-font-family:        var(--font-serif);
+  --doc-top-accent-border:  none;
+  --doc-heading-weight:     600;
+  --doc-label-spacing:      0.08em;
 }

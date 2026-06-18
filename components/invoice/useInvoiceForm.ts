@@ -1,12 +1,19 @@
 import { useState, useCallback, useMemo } from 'react'
-import type { InvoiceFormData, InvoiceTotals, LineItem, TemplateId } from './invoice.types'
+import type { InvoiceFormData, InvoiceTotals, LineItem, PaperSize, TemplateId } from './invoice.types'
 
-const CURRENT_YEAR = new Date().getFullYear()
+const CURRENT_YEAR        = new Date().getFullYear()
 const DEFAULT_INVOICE_NUMBER = `INV-${CURRENT_YEAR}-001`
+const DUE_DATE_OFFSET_MS  = 15 * 24 * 60 * 60 * 1000
+const DATE_FORMAT: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' }
+
+const now = new Date()
 
 const DEFAULT_DATA: InvoiceFormData = {
   templateId:    'minimalist',
+  paperSize:     'a4',
   invoiceNumber: DEFAULT_INVOICE_NUMBER,
+  issuedDate:    now.toLocaleDateString('en-US', DATE_FORMAT),
+  dueDate:       new Date(now.getTime() + DUE_DATE_OFFSET_MS).toLocaleDateString('en-US', DATE_FORMAT),
   issuerName:    '',
   issuerAddress: '',
   clientName:    '',
@@ -16,6 +23,7 @@ const DEFAULT_DATA: InvoiceFormData = {
   taxPercent:    10,
   discount:      0,
   notes:         '',
+  signature:     '',
 }
 
 export function useInvoiceForm() {
@@ -25,9 +33,20 @@ export function useInvoiceForm() {
     setData((prev) => ({ ...prev, templateId }))
   }, [])
 
+  const onPaperSizeChange = useCallback((paperSize: PaperSize) => {
+    setData((prev) => ({ ...prev, paperSize }))
+  }, [])
+
   const onInvoiceNumberChange = useCallback((invoiceNumber: string) => {
     setData((prev) => ({ ...prev, invoiceNumber }))
   }, [])
+
+  const onDateChange = useCallback(
+    (field: 'issuedDate' | 'dueDate', value: string) => {
+      setData((prev) => ({ ...prev, [field]: value }))
+    },
+    [],
+  )
 
   const onIssuerChange = useCallback(
     (field: 'issuerName' | 'issuerAddress', value: string) => {
@@ -84,6 +103,10 @@ export function useInvoiceForm() {
     setData((prev) => ({ ...prev, notes: value }))
   }, [])
 
+  const onSignatureChange = useCallback((value: string) => {
+    setData((prev) => ({ ...prev, signature: value }))
+  }, [])
+
   const totals = useMemo<InvoiceTotals>(() => {
     const subtotal  = data.lineItems.reduce((sum, item) => sum + item.qty * item.rate, 0)
     const taxAmount = subtotal * (data.taxPercent / 100)
@@ -95,7 +118,9 @@ export function useInvoiceForm() {
     data,
     totals,
     onTemplateChange,
+    onPaperSizeChange,
     onInvoiceNumberChange,
+    onDateChange,
     onIssuerChange,
     onClientChange,
     onAddLineItem,
@@ -104,5 +129,6 @@ export function useInvoiceForm() {
     onTaxChange,
     onDiscountChange,
     onNotesChange,
+    onSignatureChange,
   }
 }

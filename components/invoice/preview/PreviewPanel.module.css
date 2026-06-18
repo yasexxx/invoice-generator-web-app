@@ -14,6 +14,9 @@
 .documentFrame {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
   inline-size: min(100%, calc(var(--spacing-xxl) * 12));
   min-inline-size: calc(var(--spacing-xxl) * 7);
 }
@@ -69,8 +72,8 @@
 @media (min-width: 1024px) {
   .panel {
     block-size: 100%;
-    place-items: center;
-    overflow: hidden;
+    place-items: start center;
+    overflow-y: auto;
   }
 
   .documentFrame {
