@@ -24,6 +24,22 @@
   gap: var(--spacing-xs);
 }
 
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  align-self: flex-start;
+  color: var(--color-on-surface-variant);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 150ms ease;
+  margin-block-end: var(--spacing-xs);
+}
+
+.backButton:hover {
+  color: var(--color-primary);
+}
+
 @media (min-width: 1024px) {
   .panel {
     block-size: 100%;

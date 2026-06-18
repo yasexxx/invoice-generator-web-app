@@ -1,3 +1,4 @@
+import Link                   from 'next/link'
 import { TemplateSelector }   from './TemplateSelector'
 import { ClientInfoSection }  from './ClientInfoSection'
 import { LineItemsEditor }    from './LineItemsEditor'
@@ -52,6 +53,10 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
 function EditorHeader() {
   return (
     <header className={styles.header}>
+      <Link href="/dashboard" className={styles.backButton}>
+        <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
+        Dashboard
+      </Link>
       <h1 className="headline-lg text-primary">Create Invoice</h1>
       <p className="body-md text-text-muted">
         Complete the details below to generate your professional invoice.

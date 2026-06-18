@@ -19,10 +19,6 @@ function NavLeft() {
   return (
     <div className={styles.navLeft}>
       <Brand showIcon />
-      <button type="button" className={styles.dashboardButton}>
-        <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
-        Dashboard
-      </button>
     </div>
   )
 }

@@ -16,7 +16,6 @@
 
 .navLeft,
 .navRight,
-.dashboardButton,
 .sendButton {
   display: inline-flex;
   align-items: center;
@@ -31,17 +30,6 @@
   justify-content: flex-end;
   gap: var(--spacing-md);
   min-inline-size: 0;
-}
-
-.dashboardButton {
-  gap: var(--spacing-xs);
-  color: var(--color-on-surface-variant);
-  font-weight: 500;
-  transition: color 150ms ease;
-}
-
-.dashboardButton:hover {
-  color: var(--color-primary);
 }
 
 .saveStatus {
@@ -82,7 +70,6 @@
     padding-inline: var(--spacing-md);
   }
 
-  .dashboardButton,
   .saveStatus {
     display: none;
   }
