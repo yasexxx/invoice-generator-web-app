@@ -1,21 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useActionState, useState } from 'react'
 import { Button, Input } from '@/components/ui'
 import { SocialAuthButtons } from './SocialAuthButtons'
+import { loginAction, INITIAL_ERROR } from '@/lib/auth/actions'
 
 export function LoginForm() {
-  const [remember, setRemember] = useState(false)
+  const [remember,      setRemember]      = useState(false)
+  const [showPassword,  setShowPassword]  = useState(false)
+  const [state, formAction, isPending]    = useActionState(loginAction, INITIAL_ERROR)
 
   return (
-    <div className="glass-card rounded-xl p-lg md:p-xl shadow-xl flex flex-col gap-lg">
+    <form action={formAction} className="glass-card rounded-xl p-lg md:p-xl shadow-xl flex flex-col gap-lg">
       <LoginCardHeader />
-      <LoginFields />
+      <div className="flex flex-col gap-md">
+        <Input
+          name="email"
+          id="login-email"
+          label="Email address"
+          type="email"
+          placeholder="name@company.com"
+          icon="mail"
+          size="lg"
+        />
+        <PasswordFieldRow showPassword={showPassword} onToggle={() => setShowPassword(p => !p)} />
+      </div>
+      {state.error && <ErrorBanner message={state.error} />}
       <RememberCheckbox checked={remember} onChange={setRemember} />
-      <SubmitButton />
+      <SubmitButton isPending={isPending} />
       <SocialDivider />
       <SocialAuthButtons />
-    </div>
+    </form>
   )
 }
 
@@ -30,39 +45,60 @@ function LoginCardHeader() {
   )
 }
 
-function LoginFields() {
-  return (
-    <div className="flex flex-col gap-md">
-      <Input
-        id="login-email"
-        label="Email address"
-        type="email"
-        placeholder="name@company.com"
-        icon="mail"
-        size="lg"
-      />
-      <PasswordFieldRow />
-    </div>
-  )
+interface PasswordFieldRowProps {
+  showPassword: boolean
+  onToggle:     () => void
 }
 
-function PasswordFieldRow() {
+function PasswordFieldRow({ showPassword, onToggle }: PasswordFieldRowProps) {
   return (
     <div className="flex flex-col gap-xs">
       <div className="flex justify-between items-center">
         <label className="label-md text-text-muted" htmlFor="login-password">Password</label>
-        <a href="#" className="label-sm text-primary hover:text-secondary transition-colors">
+        <a href="/forgot-password" className="label-sm text-primary hover:text-secondary transition-colors">
           Forgot password?
         </a>
       </div>
       <Input
+        name="password"
         id="login-password"
-        type="password"
+        type={showPassword ? 'text' : 'password'}
         placeholder="••••••••"
         icon="lock"
         size="lg"
+        trailingSlot={<TogglePasswordButton show={showPassword} onToggle={onToggle} />}
       />
     </div>
+  )
+}
+
+interface TogglePasswordButtonProps {
+  show:     boolean
+  onToggle: () => void
+}
+
+function TogglePasswordButton({ show, onToggle }: TogglePasswordButtonProps) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      className="text-on-surface-variant hover:text-primary transition-colors"
+      aria-label={show ? 'Hide password' : 'Show password'}
+    >
+      <span className="material-symbols-outlined text-[20px]">
+        {show ? 'visibility_off' : 'visibility'}
+      </span>
+    </button>
+  )
+}
+
+interface ErrorBannerProps { message: string }
+
+function ErrorBanner({ message }: ErrorBannerProps) {
+  return (
+    <p role="alert" className="label-sm text-error bg-error/10 rounded-lg px-md py-sm">
+      {message}
+    </p>
   )
 }
 
@@ -85,13 +121,17 @@ function RememberCheckbox({ checked, onChange }: RememberCheckboxProps) {
   )
 }
 
-function SubmitButton() {
+interface SubmitButtonProps { isPending: boolean }
+
+function SubmitButton({ isPending }: SubmitButtonProps) {
   return (
-    <Button type="submit" size="lg" className="w-full group">
-      <span>Log In</span>
-      <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">
-        arrow_forward
-      </span>
+    <Button type="submit" size="lg" className="w-full group" disabled={isPending}>
+      <span>{isPending ? 'Logging in…' : 'Log In'}</span>
+      {!isPending && (
+        <span className="material-symbols-outlined text-[20px] group-hover:translate-x-1 transition-transform">
+          arrow_forward
+        </span>
+      )}
     </Button>
   )
 }
