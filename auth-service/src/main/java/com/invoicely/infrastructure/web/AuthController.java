@@ -1,6 +1,8 @@
 package com.invoicely.infrastructure.web;
 
 import com.invoicely.application.auth.AuthTokens;
+import com.invoicely.application.auth.ForgotPasswordCommand;
+import com.invoicely.application.auth.ForgotPasswordUseCase;
 import com.invoicely.application.auth.InvalidTokenException;
 import com.invoicely.application.auth.LoginCommand;
 import com.invoicely.application.auth.LoginUseCase;
@@ -10,6 +12,8 @@ import com.invoicely.application.auth.RefreshCommand;
 import com.invoicely.application.auth.RefreshUseCase;
 import com.invoicely.application.auth.RegisterUserCommand;
 import com.invoicely.application.auth.RegisterUserUseCase;
+import com.invoicely.application.auth.ResetPasswordCommand;
+import com.invoicely.application.auth.ResetPasswordUseCase;
 import com.invoicely.application.auth.VerifyEmailCommand;
 import com.invoicely.application.auth.VerifyEmailUseCase;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,11 +42,13 @@ public class AuthController {
     private static final String REFRESH_COOKIE_PATH    = "/api/auth";
     private static final long   REFRESH_COOKIE_MAX_AGE = 2_592_000L;
 
-    private final RegisterUserUseCase registerUserUseCase;
-    private final VerifyEmailUseCase  verifyEmailUseCase;
-    private final LoginUseCase        loginUseCase;
-    private final RefreshUseCase      refreshUseCase;
-    private final LogoutUseCase       logoutUseCase;
+    private final RegisterUserUseCase  registerUserUseCase;
+    private final VerifyEmailUseCase   verifyEmailUseCase;
+    private final LoginUseCase         loginUseCase;
+    private final RefreshUseCase       refreshUseCase;
+    private final LogoutUseCase        logoutUseCase;
+    private final ForgotPasswordUseCase forgotPasswordUseCase;
+    private final ResetPasswordUseCase  resetPasswordUseCase;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -92,6 +98,20 @@ public class AuthController {
             logoutUseCase.execute(new LogoutCommand(rawRefreshToken));
         }
         clearRefreshCookie(response);
+    }
+
+    @PostMapping("/forgot-password")
+    @ResponseStatus(HttpStatus.OK)
+    public void forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        log.debug("[WEB] POST /api/auth/forgot-password");
+        forgotPasswordUseCase.execute(new ForgotPasswordCommand(request.email()));
+    }
+
+    @PostMapping("/reset-password")
+    @ResponseStatus(HttpStatus.OK)
+    public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        log.debug("[WEB] POST /api/auth/reset-password");
+        resetPasswordUseCase.execute(new ResetPasswordCommand(request.token(), request.newPassword()));
     }
 
     private RegisterUserCommand toRegisterCommand(RegisterRequest r) {

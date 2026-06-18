@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class JavaMailEmailAdapter implements EmailPort {
 
-    private static final String VERIFICATION_PATH = "/api/auth/verify-email?token=";
+    private static final String VERIFICATION_PATH   = "/api/auth/verify-email?token=";
+    private static final String RESET_PASSWORD_PATH = "/reset-password?token=";
 
     private final JavaMailSender mailSender;
     private final String         fromAddress;
@@ -40,5 +41,20 @@ public class JavaMailEmailAdapter implements EmailPort {
 
         mailSender.send(message);
         log.info("[MAIL] Verification email sent to={}", email.value());
+    }
+
+    @Override
+    public void sendPasswordReset(Email email, String rawToken) {
+        log.debug("[MAIL] Sending password-reset email to={}", email.value());
+        String link = appBaseUrl + RESET_PASSWORD_PATH + rawToken;
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromAddress);
+        message.setTo(email.value());
+        message.setSubject(AuthEmailTemplates.resetPasswordSubject());
+        message.setText(AuthEmailTemplates.resetPasswordBody(link));
+
+        mailSender.send(message);
+        log.info("[MAIL] Password-reset email sent to={}", email.value());
     }
 }

@@ -58,6 +58,11 @@ public class User {
                         UserStatus.ACTIVE, createdAt, Instant.now());
     }
 
+    public User changePassword(HashedPassword newPassword) {
+        Objects.requireNonNull(newPassword, "newPassword");
+        return new User(id, email, newPassword, status, createdAt, Instant.now());
+    }
+
     public UserId         id()             { return id; }
     public Email          email()          { return email; }
     public HashedPassword hashedPassword() { return hashedPassword; }
