@@ -2,7 +2,8 @@
 
 import { useActionState } from 'react'
 import { Button, Input } from '@/components/ui'
-import { forgotPasswordAction, INITIAL_ERROR } from '@/lib/auth/actions'
+import { forgotPasswordAction } from '@/lib/auth/actions'
+import { INITIAL_ERROR }        from '@/lib/auth/types'
 
 export function ForgotPasswordForm() {
   const [state, formAction, isPending] = useActionState(forgotPasswordAction, INITIAL_ERROR)

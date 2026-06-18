@@ -3,7 +3,8 @@
 import { useActionState, useState } from 'react'
 import { Button, Input } from '@/components/ui'
 import { SocialAuthButtons } from './SocialAuthButtons'
-import { loginAction, INITIAL_ERROR } from '@/lib/auth/actions'
+import { loginAction }    from '@/lib/auth/actions'
+import { INITIAL_ERROR } from '@/lib/auth/types'
 
 export function LoginForm() {
   const [remember,      setRemember]      = useState(false)

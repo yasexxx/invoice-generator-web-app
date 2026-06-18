@@ -2,7 +2,8 @@
 
 import { useActionState, useState } from 'react'
 import { Button, Input } from '@/components/ui'
-import { resetPasswordAction, INITIAL_ERROR } from '@/lib/auth/actions'
+import { resetPasswordAction } from '@/lib/auth/actions'
+import { INITIAL_ERROR }       from '@/lib/auth/types'
 
 export interface ResetPasswordFormProps {
   token: string

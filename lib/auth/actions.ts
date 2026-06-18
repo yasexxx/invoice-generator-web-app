@@ -11,8 +11,6 @@ import {
 import { clearAuthCookies, getRefreshToken, setAuthCookies } from './cookies'
 import type { ActionState } from './types'
 
-const INITIAL_ERROR: ActionState = { error: null }
-
 export async function loginAction(
   _prevState: ActionState,
   formData: FormData,
@@ -27,7 +25,7 @@ export async function loginAction(
     return { error: error instanceof Error ? error.message : 'Login failed. Please try again.' }
   }
 
-  redirect('/')
+  redirect('/dashboard')
 }
 
 export async function registerAction(
@@ -86,4 +84,3 @@ export async function resetPasswordAction(
   redirect('/login')
 }
 
-export { INITIAL_ERROR }

@@ -4,7 +4,8 @@ import { useActionState, useState } from 'react'
 import Link from 'next/link'
 import { Button, Input } from '@/components/ui'
 import { SocialAuthButtons } from './SocialAuthButtons'
-import { registerAction, INITIAL_ERROR } from '@/lib/auth/actions'
+import { registerAction } from '@/lib/auth/actions'
+import { INITIAL_ERROR }  from '@/lib/auth/types'
 
 export function RegisterForm() {
   const [showPassword, setShowPassword]    = useState(false)
