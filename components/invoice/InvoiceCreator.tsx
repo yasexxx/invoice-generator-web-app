@@ -19,8 +19,10 @@ export function InvoiceCreator() {
   const [saveStatus, setSaveStatus] = useState(STATUS_IDLE)
 
   const handlers: EditorHandlers = {
-    onTemplateChange:  hookHandlers.onTemplateChange,
-    onClientChange:    hookHandlers.onClientChange,
+    onTemplateChange:      hookHandlers.onTemplateChange,
+    onInvoiceNumberChange: hookHandlers.onInvoiceNumberChange,
+    onIssuerChange:        hookHandlers.onIssuerChange,
+    onClientChange:        hookHandlers.onClientChange,
     onAddLineItem:     hookHandlers.onAddLineItem,
     onUpdateLineItem:  hookHandlers.onUpdateLineItem,
     onRemoveLineItem:  hookHandlers.onRemoveLineItem,

@@ -1,8 +1,14 @@
 import { useState, useCallback, useMemo } from 'react'
 import type { InvoiceFormData, InvoiceTotals, LineItem, TemplateId } from './invoice.types'
 
+const CURRENT_YEAR = new Date().getFullYear()
+const DEFAULT_INVOICE_NUMBER = `INV-${CURRENT_YEAR}-001`
+
 const DEFAULT_DATA: InvoiceFormData = {
   templateId:    'minimalist',
+  invoiceNumber: DEFAULT_INVOICE_NUMBER,
+  issuerName:    '',
+  issuerAddress: '',
   clientName:    '',
   clientEmail:   '',
   clientAddress: '',
@@ -18,6 +24,17 @@ export function useInvoiceForm() {
   const onTemplateChange = useCallback((templateId: TemplateId) => {
     setData((prev) => ({ ...prev, templateId }))
   }, [])
+
+  const onInvoiceNumberChange = useCallback((invoiceNumber: string) => {
+    setData((prev) => ({ ...prev, invoiceNumber }))
+  }, [])
+
+  const onIssuerChange = useCallback(
+    (field: 'issuerName' | 'issuerAddress', value: string) => {
+      setData((prev) => ({ ...prev, [field]: value }))
+    },
+    [],
+  )
 
   const onClientChange = useCallback(
     (field: 'clientName' | 'clientEmail' | 'clientAddress', value: string) => {
@@ -78,6 +95,8 @@ export function useInvoiceForm() {
     data,
     totals,
     onTemplateChange,
+    onInvoiceNumberChange,
+    onIssuerChange,
     onClientChange,
     onAddLineItem,
     onUpdateLineItem,

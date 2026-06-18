@@ -1,9 +1,11 @@
-import Link                   from 'next/link'
-import { TemplateSelector }   from './TemplateSelector'
-import { ClientInfoSection }  from './ClientInfoSection'
-import { LineItemsEditor }    from './LineItemsEditor'
-import { TaxDiscountSection } from './TaxDiscountSection'
-import { NotesSection }       from './NotesSection'
+import { BackLink }             from '@/components/ui'
+import { TemplateSelector }     from './TemplateSelector'
+import { InvoiceDetailsSection } from './InvoiceDetailsSection'
+import { IssuerInfoSection }    from './IssuerInfoSection'
+import { ClientInfoSection }    from './ClientInfoSection'
+import { LineItemsEditor }      from './LineItemsEditor'
+import { TaxDiscountSection }   from './TaxDiscountSection'
+import { NotesSection }         from './NotesSection'
 import type { EditorHandlers, InvoiceFormData } from '../invoice.types'
 import styles from './EditorPanel.module.css'
 
@@ -21,6 +23,17 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
         <TemplateSelector
           selected={data.templateId}
           onChange={handlers.onTemplateChange}
+        />
+
+        <InvoiceDetailsSection
+          invoiceNumber={data.invoiceNumber}
+          onChange={handlers.onInvoiceNumberChange}
+        />
+
+        <IssuerInfoSection
+          issuerName={data.issuerName}
+          issuerAddress={data.issuerAddress}
+          onChange={handlers.onIssuerChange}
         />
 
         <ClientInfoSection
@@ -53,10 +66,7 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
 function EditorHeader() {
   return (
     <header className={styles.header}>
-      <Link href="/dashboard" className={styles.backButton}>
-        <span className="material-symbols-outlined" aria-hidden="true">arrow_back</span>
-        Dashboard
-      </Link>
+      <BackLink href="/dashboard" label="Dashboard" />
       <h1 className="headline-lg text-primary">Create Invoice</h1>
       <p className="body-md text-text-muted">
         Complete the details below to generate your professional invoice.

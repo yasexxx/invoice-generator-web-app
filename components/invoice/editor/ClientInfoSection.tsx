@@ -1,10 +1,11 @@
 import { Input, Textarea } from '@/components/ui'
+import { SectionTitle }    from './SectionTitle'
 
-interface ClientInfoSectionProps {
+export interface ClientInfoSectionProps {
   clientName:    string
   clientEmail:   string
   clientAddress: string
-  onChange: (field: 'clientName' | 'clientEmail' | 'clientAddress', value: string) => void
+  onChange:      (field: 'clientName' | 'clientEmail' | 'clientAddress', value: string) => void
 }
 
 export function ClientInfoSection({ clientName, clientEmail, clientAddress, onChange }: ClientInfoSectionProps) {
@@ -38,15 +39,6 @@ export function ClientInfoSection({ clientName, clientEmail, clientAddress, onCh
           onChange={(e) => onChange('clientAddress', e.target.value)}
         />
       </div>
-    </div>
-  )
-}
-
-function SectionTitle({ icon, title }: { icon: string; title: string }) {
-  return (
-    <div className="flex items-center gap-sm text-primary">
-      <span className="material-symbols-outlined">{icon}</span>
-      <h2 className="title-md">{title}</h2>
     </div>
   )
 }

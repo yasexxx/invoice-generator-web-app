@@ -7,15 +7,23 @@ export interface InvoiceDocumentProps {
   totals: Totals
 }
 
-const INVOICE_NUMBER = '#INV-2024-001'
-const BUSINESS_LOCATION = 'San Francisco, CA'
+const ISSUER_NAME_FALLBACK    = 'Your Business'
+const ISSUER_ADDRESS_FALLBACK = 'Your City, Country'
+const CLIENT_NAME_FALLBACK    = 'Client Name'
+const CLIENT_ADDRESS_FALLBACK = '123 Client Street'
+const CLIENT_EMAIL_FALLBACK   = 'client@example.com'
+
 const ISSUED = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 const DUE    = new Date(Date.now() + 15 * 86_400_000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 
 export function InvoiceDocument({ data, totals }: InvoiceDocumentProps) {
   return (
     <div className={`invoice-theme-${data.templateId} ${styles.document} font-sans`}>
-      <DocumentHeader clientName={data.clientName} />
+      <DocumentHeader
+        invoiceNumber={data.invoiceNumber}
+        issuerName={data.issuerName}
+        issuerAddress={data.issuerAddress}
+      />
       <div className={styles.body}>
         <BillingInfo
           clientName={data.clientName}
@@ -30,7 +38,13 @@ export function InvoiceDocument({ data, totals }: InvoiceDocumentProps) {
   )
 }
 
-function DocumentHeader({ clientName }: { clientName: string }) {
+interface DocumentHeaderProps {
+  invoiceNumber: string
+  issuerName:    string
+  issuerAddress: string
+}
+
+function DocumentHeader({ invoiceNumber, issuerName, issuerAddress }: DocumentHeaderProps) {
   return (
     <header className={styles.headerBar}>
       <div>
@@ -42,19 +56,19 @@ function DocumentHeader({ clientName }: { clientName: string }) {
         <div
           style={{ fontSize: 11, fontWeight: 500, marginTop: 4, opacity: 0.65, color: 'var(--doc-header-bar-text)', letterSpacing: '0.04em', transition: 'color 300ms ease' }}
         >
-          {INVOICE_NUMBER}
+          #{invoiceNumber}
         </div>
       </div>
       <div style={{ textAlign: 'right' }}>
         <div
           style={{ fontSize: 15, fontWeight: 700, color: 'var(--doc-header-bar-text)', transition: 'color 300ms ease' }}
         >
-          {clientName || 'Your Business'}
+          {issuerName || ISSUER_NAME_FALLBACK}
         </div>
         <div
           style={{ fontSize: 11, marginTop: 2, opacity: 0.65, color: 'var(--doc-header-bar-text)', transition: 'color 300ms ease' }}
         >
-          {BUSINESS_LOCATION}
+          {issuerAddress || ISSUER_ADDRESS_FALLBACK}
         </div>
       </div>
     </header>
@@ -73,13 +87,13 @@ function BillingInfo({ clientName, clientEmail, clientAddress }: BillingInfoProp
       <div>
         <SectionLabel>Billed To</SectionLabel>
         <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--doc-title-text)', transition: 'color 300ms ease' }}>
-          {clientName || 'Client Name'}
+          {clientName || CLIENT_NAME_FALLBACK}
         </div>
         <div style={{ fontSize: 11, lineHeight: 1.6, color: 'var(--doc-muted-text)', transition: 'color 300ms ease' }}>
-          {clientAddress || '123 Client Street'}
+          {clientAddress || CLIENT_ADDRESS_FALLBACK}
         </div>
         <div style={{ fontSize: 11, color: 'var(--doc-muted-text)', transition: 'color 300ms ease' }}>
-          {clientEmail || 'client@example.com'}
+          {clientEmail || CLIENT_EMAIL_FALLBACK}
         </div>
       </div>
       <div style={{ textAlign: 'right' }}>

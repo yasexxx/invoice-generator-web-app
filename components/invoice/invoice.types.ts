@@ -9,6 +9,9 @@ export interface LineItem {
 
 export interface InvoiceFormData {
   templateId:    TemplateId
+  invoiceNumber: string
+  issuerName:    string
+  issuerAddress: string
   clientName:    string
   clientEmail:   string
   clientAddress: string
@@ -25,8 +28,10 @@ export interface InvoiceTotals {
 }
 
 export interface EditorHandlers {
-  onTemplateChange:  (id: TemplateId) => void
-  onClientChange:    (field: 'clientName' | 'clientEmail' | 'clientAddress', value: string) => void
+  onTemplateChange:      (id: TemplateId) => void
+  onInvoiceNumberChange: (value: string) => void
+  onIssuerChange:        (field: 'issuerName' | 'issuerAddress', value: string) => void
+  onClientChange:        (field: 'clientName' | 'clientEmail' | 'clientAddress', value: string) => void
   onAddLineItem:     () => void
   onUpdateLineItem:  (id: string, field: keyof Omit<LineItem, 'id'>, value: string | number) => void
   onRemoveLineItem:  (id: string) => void
