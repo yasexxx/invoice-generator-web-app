@@ -37,7 +37,7 @@ function paginationReducer(state: PaginationState, action: PaginationAction): Pa
 
 // ── Hook ──────────────────────────────────────────────────────────────────────
 
-export function useInvoicePagination(items: LineItem[]): PaginationResult {
+export function useInvoicePagination(items: LineItem[], locked = false): PaginationResult {
   const itemCount = items.length
 
   const [state, dispatch] = useReducer(
@@ -73,11 +73,13 @@ export function useInvoicePagination(items: LineItem[]): PaginationResult {
 
   // When the viewport is resized, the scaled page height changes.
   // Reset to one page and let the overflow effect re-derive the split.
+  // Skipped when locked (e.g. user has zoomed in fullscreen — resize should not disturb layout).
   useEffect(() => {
+    if (locked) return
     const reset = () => dispatch({ type: 'reset', itemCount })
     window.addEventListener('resize', reset, { passive: true })
     return () => window.removeEventListener('resize', reset)
-  }, [itemCount])
+  }, [itemCount, locked])
 
   // ── Ref-callback factory ─────────────────────────────────────────────────────
 

@@ -1,14 +1,15 @@
 'use client'
 
-import { InvoiceTotals }        from './InvoiceTotals'
-import { useInvoicePagination } from './useInvoicePagination'
+import { InvoiceTotals }    from './InvoiceTotals'
 import type { BodyRefCallback } from './useInvoicePagination'
 import type { InvoiceFormData, InvoiceTotals as Totals, LineItem } from '../invoice.types'
 import styles from './InvoiceDocument.module.css'
 
 export interface InvoiceDocumentProps {
-  data:   InvoiceFormData
-  totals: Totals
+  data:          InvoiceFormData
+  totals:        Totals
+  pages:         LineItem[][]
+  registerBody?: (index: number) => BodyRefCallback
 }
 
 const ISSUER_NAME_FALLBACK    = 'Your Business'
@@ -26,8 +27,7 @@ function rowPaddingBlock(itemCount: number): number {
   return 3
 }
 
-export function InvoiceDocument({ data, totals }: InvoiceDocumentProps) {
-  const { pages, registerBody } = useInvoicePagination(data.lineItems)
+export function InvoiceDocument({ data, totals, pages, registerBody }: InvoiceDocumentProps) {
   const themeClass = `invoice-theme-${data.templateId}`
   const lastIndex  = pages.length - 1
 
@@ -42,7 +42,7 @@ export function InvoiceDocument({ data, totals }: InvoiceDocumentProps) {
           isFirst={index === 0}
           isLast={index === lastIndex}
           themeClass={themeClass}
-          bodyRef={registerBody(index)}
+          bodyRef={registerBody?.(index)}
         />
       ))}
     </>
@@ -56,7 +56,7 @@ interface DocumentPageProps {
   isFirst:    boolean
   isLast:     boolean
   themeClass: string
-  bodyRef:    BodyRefCallback
+  bodyRef?:   BodyRefCallback
 }
 
 function DocumentPage({ data, totals, pageItems, isFirst, isLast, themeClass, bodyRef }: DocumentPageProps) {

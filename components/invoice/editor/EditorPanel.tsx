@@ -1,4 +1,5 @@
 import { BackLink }             from '@/components/ui'
+import { AccordionSection }     from './AccordionSection'
 import { TemplateSelector }     from './TemplateSelector'
 import { PaperSizeSelector }    from './PaperSizeSelector'
 import { InvoiceDetailsSection } from './InvoiceDetailsSection'
@@ -22,54 +23,72 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
       <div className={styles.content}>
         <EditorHeader />
 
-        <TemplateSelector
-          selected={data.templateId}
-          onChange={handlers.onTemplateChange}
-        />
+        <AccordionSection icon="palette" title="Template Style">
+          <TemplateSelector
+            selected={data.templateId}
+            onChange={handlers.onTemplateChange}
+          />
+        </AccordionSection>
 
-        <PaperSizeSelector
-          selected={data.paperSize}
-          onChange={handlers.onPaperSizeChange}
-        />
+        <AccordionSection icon="description" title="Paper Size">
+          <PaperSizeSelector
+            selected={data.paperSize}
+            onChange={handlers.onPaperSizeChange}
+          />
+        </AccordionSection>
 
-        <InvoiceDetailsSection
-          invoiceNumber={data.invoiceNumber}
-          issuedDate={data.issuedDate}
-          dueDate={data.dueDate}
-          onInvoiceNumberChange={handlers.onInvoiceNumberChange}
-          onDateChange={handlers.onDateChange}
-        />
+        <AccordionSection icon="receipt_long" title="Invoice Details">
+          <InvoiceDetailsSection
+            invoiceNumber={data.invoiceNumber}
+            issuedDate={data.issuedDate}
+            dueDate={data.dueDate}
+            onInvoiceNumberChange={handlers.onInvoiceNumberChange}
+            onDateChange={handlers.onDateChange}
+          />
+        </AccordionSection>
 
-        <IssuerInfoSection
-          issuerName={data.issuerName}
-          issuerAddress={data.issuerAddress}
-          onChange={handlers.onIssuerChange}
-        />
+        <AccordionSection icon="business" title="Your Organization">
+          <IssuerInfoSection
+            issuerName={data.issuerName}
+            issuerAddress={data.issuerAddress}
+            onChange={handlers.onIssuerChange}
+          />
+        </AccordionSection>
 
-        <ClientInfoSection
-          clientName={data.clientName}
-          clientEmail={data.clientEmail}
-          clientAddress={data.clientAddress}
-          onChange={handlers.onClientChange}
-        />
+        <AccordionSection icon="person" title="Client Information">
+          <ClientInfoSection
+            clientName={data.clientName}
+            clientEmail={data.clientEmail}
+            clientAddress={data.clientAddress}
+            onChange={handlers.onClientChange}
+          />
+        </AccordionSection>
 
-        <LineItemsEditor
-          lineItems={data.lineItems}
-          onAdd={handlers.onAddLineItem}
-          onUpdate={handlers.onUpdateLineItem}
-          onRemove={handlers.onRemoveLineItem}
-        />
+        <AccordionSection icon="list_alt" title="Line Items">
+          <LineItemsEditor
+            lineItems={data.lineItems}
+            onAdd={handlers.onAddLineItem}
+            onUpdate={handlers.onUpdateLineItem}
+            onRemove={handlers.onRemoveLineItem}
+          />
+        </AccordionSection>
 
-        <TaxDiscountSection
-          taxPercent={data.taxPercent}
-          discount={data.discount}
-          onTaxChange={handlers.onTaxChange}
-          onDiscountChange={handlers.onDiscountChange}
-        />
+        <AccordionSection icon="calculate" title="Tax & Discount">
+          <TaxDiscountSection
+            taxPercent={data.taxPercent}
+            discount={data.discount}
+            onTaxChange={handlers.onTaxChange}
+            onDiscountChange={handlers.onDiscountChange}
+          />
+        </AccordionSection>
 
-        <NotesSection notes={data.notes} onChange={handlers.onNotesChange} />
+        <AccordionSection icon="sticky_note_2" title="Notes & Terms">
+          <NotesSection notes={data.notes} onChange={handlers.onNotesChange} />
+        </AccordionSection>
 
-        <SignatureSection signature={data.signature} onChange={handlers.onSignatureChange} />
+        <AccordionSection icon="draw" title="Signature">
+          <SignatureSection signature={data.signature} onChange={handlers.onSignatureChange} />
+        </AccordionSection>
       </div>
     </section>
   )

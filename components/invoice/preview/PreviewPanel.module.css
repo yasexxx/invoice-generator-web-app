@@ -46,6 +46,28 @@
   font-size: calc(var(--spacing-xs) * 4);
 }
 
+.fullscreenTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  border: none;
+  border-radius: var(--rounded-sm);
+  background: color-mix(in srgb, var(--color-on-primary-fixed) 15%, transparent);
+  color: var(--color-on-primary-fixed);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.fullscreenTrigger:hover {
+  background: color-mix(in srgb, var(--color-on-primary-fixed) 28%, transparent);
+}
+
+.fullscreenTrigger span {
+  font-size: calc(var(--spacing-xs) * 4);
+}
+
 .mobileControls {
   position: sticky;
   inset-block-end: var(--spacing-lg);

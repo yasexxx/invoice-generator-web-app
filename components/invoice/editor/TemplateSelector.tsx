@@ -21,24 +21,15 @@ export interface TemplateSelectorProps {
 
 export function TemplateSelector({ selected, onChange }: TemplateSelectorProps) {
   return (
-    <div className={styles.selector}>
-      <div className={styles.header}>
-        <div className={styles.title}>
-          <span className="material-symbols-outlined" aria-hidden="true">palette</span>
-          <h2 className="title-md">Template Style</h2>
-        </div>
-        <span className={styles.meta}>{TEMPLATES.length} Styles Available</span>
-      </div>
-      <div className={styles.grid}>
-        {TEMPLATES.map((t) => (
-          <TemplateCard
-            key={t.id}
-            template={t}
-            isSelected={selected === t.id}
-            onSelect={onChange}
-          />
-        ))}
-      </div>
+    <div className={styles.grid}>
+      {TEMPLATES.map((t) => (
+        <TemplateCard
+          key={t.id}
+          template={t}
+          isSelected={selected === t.id}
+          onSelect={onChange}
+        />
+      ))}
     </div>
   )
 }

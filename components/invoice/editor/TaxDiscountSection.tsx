@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui'
 
-interface TaxDiscountSectionProps {
+export interface TaxDiscountSectionProps {
   taxPercent:       number
   discount:         number
   onTaxChange:      (v: number) => void

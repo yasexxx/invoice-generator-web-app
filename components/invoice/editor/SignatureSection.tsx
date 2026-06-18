@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useState, useCallback } from 'react'
-import { SectionTitle } from './SectionTitle'
 import styles from './SignatureSection.module.css'
 
 export interface SignatureSectionProps {
@@ -21,7 +20,6 @@ export function SignatureSection({ signature, onChange }: SignatureSectionProps)
 
   return (
     <div className={styles.section}>
-      <SectionTitle icon="draw" title="Signature" />
       <ModeToggle mode={mode} onModeChange={setMode} />
       {mode === 'draw'
         ? <SignatureCanvas onConfirm={onChange} />

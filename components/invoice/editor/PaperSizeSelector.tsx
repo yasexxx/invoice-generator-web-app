@@ -1,5 +1,4 @@
 import type { PaperSize } from '../invoice.types'
-import { SectionTitle }   from './SectionTitle'
 import styles from './PaperSizeSelector.module.css'
 
 interface PaperOption {
@@ -21,18 +20,15 @@ export interface PaperSizeSelectorProps {
 
 export function PaperSizeSelector({ selected, onChange }: PaperSizeSelectorProps) {
   return (
-    <div className={styles.selector}>
-      <SectionTitle icon="description" title="Paper Size" />
-      <div className={styles.grid}>
-        {PAPER_OPTIONS.map((option) => (
-          <PaperCard
-            key={option.id}
-            option={option}
-            isSelected={selected === option.id}
-            onSelect={onChange}
-          />
-        ))}
-      </div>
+    <div className={styles.grid}>
+      {PAPER_OPTIONS.map((option) => (
+        <PaperCard
+          key={option.id}
+          option={option}
+          isSelected={selected === option.id}
+          onSelect={onChange}
+        />
+      ))}
     </div>
   )
 }

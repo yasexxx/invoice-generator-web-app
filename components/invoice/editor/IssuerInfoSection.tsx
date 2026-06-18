@@ -1,5 +1,4 @@
 import { Input, Textarea } from '@/components/ui'
-import { SectionTitle }    from './SectionTitle'
 
 export interface IssuerInfoSectionProps {
   issuerName:    string
@@ -9,9 +8,7 @@ export interface IssuerInfoSectionProps {
 
 export function IssuerInfoSection({ issuerName, issuerAddress, onChange }: IssuerInfoSectionProps) {
   return (
-    <div className="space-y-md">
-      <SectionTitle icon="business" title="Your Organization" />
-      <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-md">
         <Input
           id="issuer-name"
           label="ORGANIZATION NAME"
@@ -29,7 +26,6 @@ export function IssuerInfoSection({ issuerName, issuerAddress, onChange }: Issue
           resize="none"
           onChange={(e) => onChange('issuerAddress', e.target.value)}
         />
-      </div>
     </div>
   )
 }

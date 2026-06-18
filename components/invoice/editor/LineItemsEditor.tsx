@@ -1,6 +1,6 @@
 import type { LineItem } from '../invoice.types'
 
-interface LineItemsEditorProps {
+export interface LineItemsEditorProps {
   lineItems:      LineItem[]
   onAdd:          () => void
   onUpdate:       (id: string, field: keyof Omit<LineItem, 'id'>, value: string | number) => void
@@ -24,12 +24,9 @@ export function LineItemsEditor({ lineItems, onAdd, onUpdate, onRemove }: LineIt
 
 function LineItemsHeader({ onAdd }: { onAdd: () => void }) {
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-sm text-primary">
-        <span className="material-symbols-outlined">list_alt</span>
-        <h2 className="title-md">Line Items</h2>
-      </div>
+    <div className="flex justify-end">
       <button
+        type="button"
         onClick={onAdd}
         className="text-primary label-md flex items-center gap-xs hover:bg-primary-container/20 px-sm py-1 rounded transition-colors"
       >

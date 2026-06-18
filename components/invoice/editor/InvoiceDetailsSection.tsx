@@ -1,5 +1,4 @@
-import { Input }        from '@/components/ui'
-import { SectionTitle } from './SectionTitle'
+import { Input } from '@/components/ui'
 
 export interface InvoiceDetailsSectionProps {
   invoiceNumber: string
@@ -17,9 +16,7 @@ export function InvoiceDetailsSection({
   onDateChange,
 }: InvoiceDetailsSectionProps) {
   return (
-    <div className="space-y-md">
-      <SectionTitle icon="receipt_long" title="Invoice Details" />
-      <div className="flex flex-col gap-md">
+    <div className="flex flex-col gap-md">
         <Input
           id="invoice-number"
           label="INVOICE NUMBER"
@@ -48,7 +45,6 @@ export function InvoiceDetailsSection({
             trailingSlot={dueDate ? <ClearButton onClear={() => onDateChange('dueDate', '')} /> : undefined}
           />
         </div>
-      </div>
     </div>
   )
 }

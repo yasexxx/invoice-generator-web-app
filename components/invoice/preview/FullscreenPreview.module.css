@@ -1,0 +1,184 @@
+/* ── Overlay ─────────────────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-background);
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────────────── */
+
+.toolbar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-surface-container-low);
+  border-block-end: 1px solid color-mix(in srgb, var(--color-outline-variant) 45%, transparent);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid color-mix(in srgb, var(--color-primary-container) 50%, transparent);
+  border-radius: var(--rounded-full);
+  background: color-mix(in srgb, var(--color-primary) 86%, transparent);
+  color: var(--color-on-primary-fixed);
+  font-family: var(--font-jetbrains-mono);
+  font-size: calc(var(--spacing-xs) * 3);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.badge span {
+  font-size: calc(var(--spacing-xs) * 4);
+}
+
+.pageIndicator {
+  font-family: var(--font-jetbrains-mono);
+  font-size: calc(var(--spacing-xs) * 3);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-on-surface-variant);
+}
+
+/* ── Zoom controls ───────────────────────────────────────────────────────── */
+
+.zoomControls {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-inline-start: auto;
+  padding: var(--spacing-xs);
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  border-radius: var(--rounded-md);
+  background: var(--color-surface-container);
+}
+
+.zoomBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--spacing-lg) + var(--spacing-xs));
+  block-size: calc(var(--spacing-lg) + var(--spacing-xs));
+  border: none;
+  border-radius: var(--rounded-sm);
+  background: transparent;
+  color: var(--color-on-surface);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.zoomBtn:hover:not(:disabled) {
+  background: var(--color-surface-container-high);
+}
+
+.zoomBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.zoomLabel {
+  min-inline-size: calc(var(--spacing-xxl) + var(--spacing-xs));
+  text-align: center;
+  font-family: var(--font-jetbrains-mono);
+  font-size: calc(var(--spacing-xs) * 3);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-on-surface-variant);
+}
+
+/* ── Close button ────────────────────────────────────────────────────────── */
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--spacing-xl) + var(--spacing-sm));
+  block-size: calc(var(--spacing-xl) + var(--spacing-sm));
+  border: none;
+  border-radius: var(--rounded-md);
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.closeBtn:hover {
+  background: var(--color-surface-container-high);
+  color: var(--color-on-surface);
+}
+
+/* ── Document scroller ───────────────────────────────────────────────────── */
+
+.scroller {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+/* Zoom wrapper: receives CSS `zoom` inline style from component.
+   Pages inside mirror the exact sizing formula from PreviewPanel .documentFrame
+   so both views render pages at identical pixel dimensions before any zoom is applied. */
+.zoomWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl) var(--spacing-lg);
+}
+
+.zoomWrapper > * {
+  flex-shrink: 0;
+  inline-size: min(
+    calc(100% - var(--spacing-xl)),
+    calc((100svh - (var(--spacing-xxl) * 3.5)) / 1.414)
+  );
+}
+
+/* ── Navigation controls ─────────────────────────────────────────────────── */
+
+.navControls {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-surface-container-low);
+  border-block-start: 1px solid color-mix(in srgb, var(--color-outline-variant) 45%, transparent);
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  border-radius: var(--rounded-md);
+  background: var(--color-surface-container);
+  color: var(--color-on-surface);
+  font-family: var(--font-jetbrains-mono);
+  font-size: calc(var(--spacing-xs) * 3);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 150ms ease, opacity 150ms ease;
+}
+
+.navButton:hover:not(:disabled) {
+  background: var(--color-surface-container-high);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

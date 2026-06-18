@@ -1,11 +1,3 @@
-.selector {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
-}
-
-.header,
-.title,
 .cardFooter,
 .proBadge,
 .selectedCheck {
@@ -13,22 +5,6 @@
   align-items: center;
 }
 
-.header {
-  justify-content: space-between;
-  gap: var(--spacing-md);
-  color: var(--color-primary);
-}
-
-.title {
-  gap: var(--spacing-sm);
-  min-inline-size: 0;
-}
-
-.title h2 {
-  min-inline-size: 0;
-}
-
-.meta,
 .cardLabel,
 .freeLabel {
   font-family: var(--font-jetbrains-mono);
@@ -36,12 +12,6 @@
   font-weight: 700;
   line-height: calc(var(--spacing-xs) * 4);
   letter-spacing: 0.05em;
-}
-
-.meta {
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .grid {
@@ -201,14 +171,6 @@
 }
 
 @media (max-width: 767px) {
-  .header {
-    align-items: flex-start;
-  }
-
-  .meta {
-    display: none;
-  }
-
   .grid {
     grid-template-columns: minmax(0, 1fr);
   }
