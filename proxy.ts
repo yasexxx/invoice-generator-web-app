@@ -9,7 +9,7 @@ const DASHBOARD_PATH       = '/dashboard'
 const LOGIN_PATH           = '/login'
 
 const AUTH_PAGE_PREFIXES      = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email'] as const
-const PROTECTED_PATH_PREFIXES = ['/dashboard', '/invoice'] as const
+const PROTECTED_PATH_PREFIXES = ['/dashboard', '/invoice', '/settings'] as const
 
 const COOKIE_BASE = { httpOnly: true, secure: true, sameSite: 'strict' as const, path: '/' }
 
