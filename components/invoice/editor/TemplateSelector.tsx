@@ -2,20 +2,19 @@ import type { TemplateId } from '../invoice.types'
 import styles from './TemplateSelector.module.css'
 
 interface Template {
-  id: TemplateId
+  id:    TemplateId
   label: string
   isPro: boolean
-  previewClass: string
 }
 
 const TEMPLATES: Template[] = [
-  { id: 'minimalist',   label: 'Minimalist',   isPro: false, previewClass: 'bg-white' },
-  { id: 'corporate',    label: 'Corporate',    isPro: true,  previewClass: 'bg-gradient-to-br from-surface-container to-surface-container-highest' },
-  { id: 'modern-dark',  label: 'Modern Dark',  isPro: true,  previewClass: 'bg-gradient-to-tr from-surface-container-low to-surface-container-highest' },
-  { id: 'classic',      label: 'Classic',      isPro: false, previewClass: 'bg-gray-50' },
+  { id: 'minimalist',  label: 'Minimalist',  isPro: false },
+  { id: 'corporate',   label: 'Corporate',   isPro: true  },
+  { id: 'modern-dark', label: 'Modern Dark', isPro: true  },
+  { id: 'classic',     label: 'Classic',     isPro: false },
 ]
 
-interface TemplateSelectorProps {
+export interface TemplateSelectorProps {
   selected: TemplateId
   onChange: (id: TemplateId) => void
 }
@@ -28,13 +27,16 @@ export function TemplateSelector({ selected, onChange }: TemplateSelectorProps) 
           <span className="material-symbols-outlined" aria-hidden="true">palette</span>
           <h2 className="title-md">Template Style</h2>
         </div>
-        <span className={styles.meta}>
-          {TEMPLATES.length} Styles Available
-        </span>
+        <span className={styles.meta}>{TEMPLATES.length} Styles Available</span>
       </div>
       <div className={styles.grid}>
         {TEMPLATES.map((t) => (
-          <TemplateCard key={t.id} template={t} isSelected={selected === t.id} onSelect={onChange} />
+          <TemplateCard
+            key={t.id}
+            template={t}
+            isSelected={selected === t.id}
+            onSelect={onChange}
+          />
         ))}
       </div>
     </div>
@@ -42,13 +44,13 @@ export function TemplateSelector({ selected, onChange }: TemplateSelectorProps) 
 }
 
 interface TemplateCardProps {
-  template: Template
+  template:   Template
   isSelected: boolean
-  onSelect: (id: TemplateId) => void
+  onSelect:   (id: TemplateId) => void
 }
 
 function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
-  const { id, label, isPro, previewClass } = template
+  const { id, label, isPro } = template
 
   return (
     <button
@@ -56,13 +58,9 @@ function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
       onClick={() => onSelect(id)}
       className={`${styles.card} ${isSelected ? styles.selectedCard : styles.unselectedCard}`}
     >
-      <div
-        className={`${styles.preview} ${previewClass} ${
-          isSelected
-            ? styles.selectedPreview
-            : styles.unselectedPreview
-        }`}
-      />
+      <div className={`${styles.preview} ${isSelected ? styles.selectedPreview : styles.unselectedPreview} invoice-theme-${id}`}>
+        <TemplateThumbnail />
+      </div>
       <div className={styles.cardFooter}>
         <span className={`${styles.cardLabel} ${isSelected ? styles.selectedLabel : styles.unselectedLabel}`}>
           {label}
@@ -71,6 +69,24 @@ function TemplateCard({ template, isSelected, onSelect }: TemplateCardProps) {
       </div>
       {isSelected && <SelectedCheck />}
     </button>
+  )
+}
+
+function TemplateThumbnail() {
+  return (
+    <div className={styles.thumbDoc}>
+      <div className={styles.thumbHeaderBar} />
+      <div className={styles.thumbBody}>
+        <div className={styles.thumbLine} style={{ width: '55%' }} />
+        <div className={styles.thumbLine} style={{ width: '35%' }} />
+        <div className={styles.thumbDivider} />
+        <div className={styles.thumbLine} style={{ width: '80%' }} />
+        <div className={styles.thumbLine} style={{ width: '65%' }} />
+        <div className={styles.thumbLine} style={{ width: '72%' }} />
+        <div className={styles.thumbDivider} />
+        <div className={styles.thumbAccentLine} />
+      </div>
+    </div>
   )
 }
 

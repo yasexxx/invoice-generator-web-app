@@ -1,0 +1,28 @@
+.document {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1 / 1.414;
+  background: var(--doc-bg);
+  transition: background-color 300ms ease;
+}
+
+.headerBar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: var(--spacing-lg) 40px;
+  background: var(--doc-header-bar-bg);
+  transition: background-color 300ms ease;
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  padding: var(--spacing-md) 40px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  overflow: hidden;
+}

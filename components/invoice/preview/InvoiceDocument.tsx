@@ -1,40 +1,63 @@
 import { InvoiceTotals } from './InvoiceTotals'
 import type { InvoiceFormData, InvoiceTotals as Totals } from '../invoice.types'
+import styles from './InvoiceDocument.module.css'
 
-interface InvoiceDocumentProps {
+export interface InvoiceDocumentProps {
   data:   InvoiceFormData
   totals: Totals
 }
 
+const INVOICE_NUMBER = '#INV-2024-001'
+const BUSINESS_LOCATION = 'San Francisco, CA'
 const ISSUED = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-const DUE    = new Date(Date.now() + 15 * 86400_000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+const DUE    = new Date(Date.now() + 15 * 86_400_000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
 
 export function InvoiceDocument({ data, totals }: InvoiceDocumentProps) {
   return (
-    <div className="bg-white text-gray-900 rounded-none overflow-hidden p-[40px] flex flex-col font-sans aspect-[1/1.414]">
+    <div className={`invoice-theme-${data.templateId} ${styles.document} font-sans`}>
       <DocumentHeader clientName={data.clientName} />
-      <BillingInfo clientName={data.clientName} clientEmail={data.clientEmail} clientAddress={data.clientAddress} />
-      <LineItemsTable data={data} />
-      <InvoiceTotals totals={totals} taxPercent={data.taxPercent} />
-      {data.notes && <NotesFooter notes={data.notes} />}
+      <div className={styles.body}>
+        <BillingInfo
+          clientName={data.clientName}
+          clientEmail={data.clientEmail}
+          clientAddress={data.clientAddress}
+        />
+        <LineItemsTable data={data} />
+        <InvoiceTotals totals={totals} taxPercent={data.taxPercent} />
+        {data.notes && <NotesFooter notes={data.notes} />}
+      </div>
     </div>
   )
 }
 
 function DocumentHeader({ clientName }: { clientName: string }) {
   return (
-    <div className="flex justify-between items-start mb-6">
+    <header className={styles.headerBar}>
       <div>
-        <div className="text-[28px] font-bold text-gray-800 tracking-tight">INVOICE</div>
-        <div className="text-gray-500 font-medium text-sm">#INV-2024-001</div>
+        <div
+          style={{ fontSize: 26, fontWeight: 700, letterSpacing: '-0.02em', color: 'var(--doc-header-bar-text)', lineHeight: 1, transition: 'color 300ms ease' }}
+        >
+          INVOICE
+        </div>
+        <div
+          style={{ fontSize: 11, fontWeight: 500, marginTop: 4, opacity: 0.65, color: 'var(--doc-header-bar-text)', letterSpacing: '0.04em', transition: 'color 300ms ease' }}
+        >
+          {INVOICE_NUMBER}
+        </div>
       </div>
-      <div className="text-right">
-        <div className="text-lg font-bold text-gray-900">
+      <div style={{ textAlign: 'right' }}>
+        <div
+          style={{ fontSize: 15, fontWeight: 700, color: 'var(--doc-header-bar-text)', transition: 'color 300ms ease' }}
+        >
           {clientName || 'Your Business'}
         </div>
-        <div className="text-gray-500 text-sm">San Francisco, CA</div>
+        <div
+          style={{ fontSize: 11, marginTop: 2, opacity: 0.65, color: 'var(--doc-header-bar-text)', transition: 'color 300ms ease' }}
+        >
+          {BUSINESS_LOCATION}
+        </div>
       </div>
-    </div>
+    </header>
   )
 }
 
@@ -46,37 +69,72 @@ interface BillingInfoProps {
 
 function BillingInfo({ clientName, clientEmail, clientAddress }: BillingInfoProps) {
   return (
-    <div className="grid grid-cols-2 gap-6 mb-8">
+    <div className="grid grid-cols-2 gap-6">
       <div>
-        <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">BILLED TO</div>
-        <div className="text-base font-bold text-gray-800">{clientName  || 'Client Name'}</div>
-        <div className="text-sm text-gray-500">{clientAddress || '123 Client Street'}</div>
-        <div className="text-sm text-gray-500">{clientEmail   || 'client@example.com'}</div>
+        <SectionLabel>Billed To</SectionLabel>
+        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--doc-title-text)', transition: 'color 300ms ease' }}>
+          {clientName || 'Client Name'}
+        </div>
+        <div style={{ fontSize: 11, lineHeight: 1.6, color: 'var(--doc-muted-text)', transition: 'color 300ms ease' }}>
+          {clientAddress || '123 Client Street'}
+        </div>
+        <div style={{ fontSize: 11, color: 'var(--doc-muted-text)', transition: 'color 300ms ease' }}>
+          {clientEmail || 'client@example.com'}
+        </div>
       </div>
-      <div className="text-right">
-        <div className="inline-block text-left">
-          <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">DATES</div>
-          <div className="text-sm text-gray-700">Issued: <span className="font-semibold">{ISSUED}</span></div>
-          <div className="text-sm text-gray-700">Due: <span className="font-semibold">{DUE}</span></div>
+      <div style={{ textAlign: 'right' }}>
+        <div style={{ display: 'inline-block', textAlign: 'left' }}>
+          <SectionLabel>Dates</SectionLabel>
+          <DateRow label="Issued" value={ISSUED} />
+          <DateRow label="Due"    value={DUE} />
         </div>
       </div>
     </div>
   )
 }
 
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      style={{ fontSize: 9, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--doc-muted-text)', marginBottom: 4, transition: 'color 300ms ease' }}
+    >
+      {children}
+    </div>
+  )
+}
+
+function DateRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{ fontSize: 11, color: 'var(--doc-body-text)', lineHeight: 1.7, transition: 'color 300ms ease' }}>
+      {label}:{' '}
+      <span style={{ fontWeight: 600, color: 'var(--doc-title-text)', transition: 'color 300ms ease' }}>
+        {value}
+      </span>
+    </div>
+  )
+}
+
 function LineItemsTable({ data }: { data: InvoiceFormData }) {
   return (
-    <div className="flex-1">
-      <table className="w-full text-left border-collapse">
+    <div style={{ flex: 1 }}>
+      <table className="w-full text-left" style={{ borderCollapse: 'collapse' }}>
         <thead>
-          <tr className="border-b-2 border-gray-100">
-            {['Description', 'Qty', 'Price', 'Total'].map((h, i) => (
+          <tr style={{ borderBottom: '2px solid var(--doc-border)', transition: 'border-color 300ms ease' }}>
+            {(['Description', 'Qty', 'Price', 'Total'] as const).map((heading, i) => (
               <th
-                key={h}
-                className="py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest"
-                style={{ textAlign: i > 0 ? 'right' : 'left' }}
+                key={heading}
+                style={{
+                  paddingBlock: 6,
+                  fontSize: 9,
+                  fontWeight: 700,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: 'var(--doc-muted-text)',
+                  textAlign: i > 0 ? 'right' : 'left',
+                  transition: 'color 300ms ease',
+                }}
               >
-                {h}
+                {heading}
               </th>
             ))}
           </tr>
@@ -85,11 +143,19 @@ function LineItemsTable({ data }: { data: InvoiceFormData }) {
           {data.lineItems.map((item) => {
             const lineTotal = item.qty * item.rate
             return (
-              <tr key={item.id} className="border-b border-gray-50">
-                <td className="py-3 font-semibold text-gray-800">{item.description || '—'}</td>
-                <td className="py-3 text-right text-gray-600">{item.qty}</td>
-                <td className="py-3 text-right text-gray-600">${item.rate.toFixed(2)}</td>
-                <td className="py-3 text-right font-bold text-gray-800">${lineTotal.toFixed(2)}</td>
+              <tr key={item.id} style={{ borderBottom: '1px solid var(--doc-border)', transition: 'border-color 300ms ease' }}>
+                <td style={{ paddingBlock: 10, fontSize: 12, fontWeight: 600, color: 'var(--doc-title-text)', transition: 'color 300ms ease' }}>
+                  {item.description || '—'}
+                </td>
+                <td style={{ paddingBlock: 10, fontSize: 12, textAlign: 'right', color: 'var(--doc-body-text)', transition: 'color 300ms ease' }}>
+                  {item.qty}
+                </td>
+                <td style={{ paddingBlock: 10, fontSize: 12, textAlign: 'right', color: 'var(--doc-body-text)', transition: 'color 300ms ease' }}>
+                  ${item.rate.toFixed(2)}
+                </td>
+                <td style={{ paddingBlock: 10, fontSize: 12, textAlign: 'right', fontWeight: 700, color: 'var(--doc-title-text)', transition: 'color 300ms ease' }}>
+                  ${lineTotal.toFixed(2)}
+                </td>
               </tr>
             )
           })}
@@ -101,9 +167,11 @@ function LineItemsTable({ data }: { data: InvoiceFormData }) {
 
 function NotesFooter({ notes }: { notes: string }) {
   return (
-    <div className="mt-6">
-      <div className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">NOTES</div>
-      <p className="text-[12px] text-gray-500 leading-relaxed italic">{notes}</p>
+    <div>
+      <SectionLabel>Notes</SectionLabel>
+      <p style={{ fontSize: 11, color: 'var(--doc-muted-text)', lineHeight: 1.6, fontStyle: 'italic', transition: 'color 300ms ease' }}>
+        {notes}
+      </p>
     </div>
   )
 }
