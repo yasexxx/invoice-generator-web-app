@@ -85,6 +85,16 @@ export async function logoutApi(refreshToken: string): Promise<void> {
   }).catch(() => { /* best-effort: clear local session regardless */ })
 }
 
+export async function verifyEmailApi(token: string): Promise<void> {
+  const url = new URL(`${AUTH_API_BASE}/api/auth/verify-email`)
+  url.searchParams.set('token', token)
+  const response = await fetch(url.toString())
+
+  if (!response.ok) {
+    throw new Error(await extractApiError(response))
+  }
+}
+
 export async function refreshApi(refreshToken: string): Promise<AuthTokens> {
   const response = await fetch(`${AUTH_API_BASE}/api/auth/refresh`, {
     method:  'POST',

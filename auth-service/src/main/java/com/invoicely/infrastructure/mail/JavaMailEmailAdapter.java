@@ -12,26 +12,26 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class JavaMailEmailAdapter implements EmailPort {
 
-    private static final String VERIFICATION_PATH   = "/api/auth/verify-email?token=";
+    private static final String VERIFICATION_PATH   = "/verify-email?token=";
     private static final String RESET_PASSWORD_PATH = "/reset-password?token=";
 
     private final JavaMailSender mailSender;
     private final String         fromAddress;
-    private final String         appBaseUrl;
+    private final String         frontendUrl;
 
     public JavaMailEmailAdapter(
             JavaMailSender mailSender,
             @Value("${app.mail.from:noreply@invoicely.com}") String fromAddress,
-            @Value("${app.base-url:http://localhost:8081}") String appBaseUrl) {
+            @Value("${app.frontend-url:http://localhost:3000}") String frontendUrl) {
         this.mailSender  = mailSender;
         this.fromAddress = fromAddress;
-        this.appBaseUrl  = appBaseUrl;
+        this.frontendUrl = frontendUrl;
     }
 
     @Override
     public void sendVerification(Email email, String rawToken) {
         log.debug("[MAIL] Sending verification email to={}", email.value());
-        String link = appBaseUrl + VERIFICATION_PATH + rawToken;
+        String link = frontendUrl + VERIFICATION_PATH + rawToken;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromAddress);
@@ -46,7 +46,7 @@ public class JavaMailEmailAdapter implements EmailPort {
     @Override
     public void sendPasswordReset(Email email, String rawToken) {
         log.debug("[MAIL] Sending password-reset email to={}", email.value());
-        String link = appBaseUrl + RESET_PASSWORD_PATH + rawToken;
+        String link = frontendUrl + RESET_PASSWORD_PATH + rawToken;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromAddress);
