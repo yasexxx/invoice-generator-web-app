@@ -7,14 +7,14 @@ export interface Column<T> {
   render?: (value: T[keyof T], row: T) => React.ReactNode
 }
 
-export interface DataTableProps<T extends Record<string, unknown>> {
+export interface DataTableProps<T extends object> {
   columns: Column<T>[]
   rows: T[]
   className?: string
   keyExtractor: (row: T, index: number) => string | number
 }
 
-export function DataTable<T extends Record<string, unknown>>({
+export function DataTable<T extends object>({
   columns,
   rows,
   className,
