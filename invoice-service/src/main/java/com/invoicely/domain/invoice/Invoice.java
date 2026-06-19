@@ -9,19 +9,23 @@ import java.util.UUID;
 
 public class Invoice {
 
-    private final UUID id;
-    private final TemplateId templateId;
-    private final String clientName;
-    private final String clientEmail;
-    private final String clientAddress;
+    private final UUID           id;
+    private final String         userEmail;
+    private final String         invoiceNumber;
+    private final TemplateId     templateId;
+    private final String         clientName;
+    private final String         clientEmail;
+    private final String         clientAddress;
     private final List<LineItem> lineItems;
-    private final BigDecimal taxPercent;
-    private final BigDecimal discount;
-    private final String notes;
-    private final Instant createdAt;
+    private final BigDecimal     taxPercent;
+    private final BigDecimal     discount;
+    private final String         notes;
+    private final Instant        createdAt;
 
     public Invoice(
             UUID id,
+            String userEmail,
+            String invoiceNumber,
             TemplateId templateId,
             String clientName,
             String clientEmail,
@@ -30,12 +34,14 @@ public class Invoice {
             BigDecimal taxPercent,
             BigDecimal discount,
             String notes) {
-        this(id, templateId, clientName, clientEmail, clientAddress,
-             lineItems, taxPercent, discount, notes, Instant.now());
+        this(id, userEmail, invoiceNumber, templateId, clientName, clientEmail,
+             clientAddress, lineItems, taxPercent, discount, notes, Instant.now());
     }
 
     private Invoice(
             UUID id,
+            String userEmail,
+            String invoiceNumber,
             TemplateId templateId,
             String clientName,
             String clientEmail,
@@ -55,6 +61,8 @@ public class Invoice {
             throw new IllegalArgumentException("clientName must not be blank");
         }
         this.id            = id;
+        this.userEmail     = userEmail     != null ? userEmail     : "";
+        this.invoiceNumber = invoiceNumber != null ? invoiceNumber : "";
         this.templateId    = templateId;
         this.clientName    = clientName.strip();
         this.clientEmail   = clientEmail;
@@ -68,6 +76,8 @@ public class Invoice {
 
     public static Invoice reconstitute(
             UUID id,
+            String userEmail,
+            String invoiceNumber,
             TemplateId templateId,
             String clientName,
             String clientEmail,
@@ -77,8 +87,8 @@ public class Invoice {
             BigDecimal discount,
             String notes,
             Instant createdAt) {
-        return new Invoice(id, templateId, clientName, clientEmail, clientAddress,
-                           lineItems, taxPercent, discount, notes, createdAt);
+        return new Invoice(id, userEmail, invoiceNumber, templateId, clientName, clientEmail,
+                           clientAddress, lineItems, taxPercent, discount, notes, createdAt);
     }
 
     public InvoiceTotals calculateTotals() {
@@ -96,6 +106,8 @@ public class Invoice {
     }
 
     public UUID           id()            { return id; }
+    public String         userEmail()     { return userEmail; }
+    public String         invoiceNumber() { return invoiceNumber; }
     public TemplateId     templateId()    { return templateId; }
     public String         clientName()    { return clientName; }
     public String         clientEmail()   { return clientEmail; }

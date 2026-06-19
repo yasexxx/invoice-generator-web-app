@@ -63,7 +63,7 @@ class InvoiceControllerTest {
     @Test
     void createInvoice_missingClientName_returns422() {
         CreateInvoiceRequest request = new CreateInvoiceRequest(
-                "MINIMALIST", null, "client@example.com",
+                "MINIMALIST", "INV-T-001", null, "client@example.com",
                 "123 Main St", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
         );
 
@@ -76,7 +76,7 @@ class InvoiceControllerTest {
     @Test
     void createInvoice_invalidTemplateId_returns400() {
         CreateInvoiceRequest request = new CreateInvoiceRequest(
-                "NONEXISTENT", "Alice", "alice@example.com",
+                "NONEXISTENT", "INV-T-002", "Alice", "alice@example.com",
                 "", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
         );
 
@@ -90,7 +90,7 @@ class InvoiceControllerTest {
         CreateInvoiceRequest.LineItemRequest item =
                 new CreateInvoiceRequest.LineItemRequest("Design work", 2, new BigDecimal("100.00"));
         return new CreateInvoiceRequest(
-                "MINIMALIST", "ACME Corp", "acme@example.com",
+                "MINIMALIST", "INV-T-003", "ACME Corp", "acme@example.com",
                 "123 Main St", List.of(item),
                 new BigDecimal("10"), BigDecimal.ZERO, "Thank you"
         );

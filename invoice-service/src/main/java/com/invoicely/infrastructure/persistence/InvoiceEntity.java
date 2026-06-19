@@ -32,6 +32,12 @@ class InvoiceEntity {
     @Id
     private UUID id;
 
+    @Column(name = "user_email", nullable = false)
+    private String userEmail;
+
+    @Column(name = "invoice_number", nullable = false, length = 100)
+    private String invoiceNumber;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "template_id", nullable = false, length = 20)
     private TemplateId templateId;

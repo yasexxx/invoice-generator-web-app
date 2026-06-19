@@ -1,6 +1,7 @@
 package com.invoicely.application.invoice;
 
 import com.invoicely.application.port.InvoiceEventPort;
+import com.invoicely.domain.draft.DraftRepository;
 import com.invoicely.domain.invoice.Invoice;
 import com.invoicely.domain.invoice.InvoiceRepository;
 import com.invoicely.domain.invoice.InvoiceTotals;
@@ -21,12 +22,14 @@ import java.util.UUID;
 public class InvoiceApplicationService implements CreateInvoiceUseCase {
 
     private final InvoiceRepository invoiceRepository;
-    private final InvoiceEventPort eventPort;
+    private final DraftRepository   draftRepository;
+    private final InvoiceEventPort  eventPort;
 
     @Override
     @Transactional
     public InvoiceResponse execute(CreateInvoiceCommand command) {
         log.debug("[APP] Creating invoice clientEmail={}", command.clientEmail());
+        guardNoDuplicate(command.userEmail(), command.invoiceNumber());
 
         List<LineItem> lineItems = command.lineItems().stream()
                 .map(li -> new LineItem(UUID.randomUUID(), li.description(), li.qty(), li.rate()))
@@ -34,6 +37,8 @@ public class InvoiceApplicationService implements CreateInvoiceUseCase {
 
         Invoice invoice = new Invoice(
                 UUID.randomUUID(),
+                command.userEmail(),
+                command.invoiceNumber(),
                 command.templateId(),
                 command.clientName(),
                 command.clientEmail(),
@@ -52,5 +57,16 @@ public class InvoiceApplicationService implements CreateInvoiceUseCase {
         eventPort.publish(new InvoiceDraftedEvent(saved.id(), saved.clientEmail(), Instant.now()));
 
         return new InvoiceResponse(saved.id(), totals);
+    }
+
+    private void guardNoDuplicate(String userEmail, String invoiceNumber) {
+        if (invoiceNumber == null || invoiceNumber.isBlank()) return;
+        boolean inInvoices = invoiceRepository.existsByUserEmailAndInvoiceNumber(
+                userEmail, invoiceNumber);
+        boolean inDrafts   = draftRepository.existsByUserEmailAndInvoiceNumberExcluding(
+                userEmail, invoiceNumber, null);
+        if (inInvoices || inDrafts) {
+            throw new DuplicateInvoiceNumberException(invoiceNumber);
+        }
     }
 }

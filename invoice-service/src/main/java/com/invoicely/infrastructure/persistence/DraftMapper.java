@@ -14,9 +14,10 @@ final class DraftMapper {
                 .map(li -> new DraftLineItemEmbeddable(li.id(), li.description(), li.qty(), li.rate()))
                 .toList();
         return new DraftEntity(
-                draft.id(), draft.templateId(), draft.paperSize(), draft.invoiceNumber(),
-                draft.issuedDate(), draft.dueDate(), draft.issuerName(), draft.issuerAddress(),
-                draft.clientName(), draft.clientEmail(), draft.clientAddress(),
+                draft.id(), draft.userEmail(), draft.templateId(), draft.paperSize(),
+                draft.invoiceNumber(), draft.issuedDate(), draft.dueDate(),
+                draft.issuerName(), draft.issuerAddress(), draft.clientName(),
+                draft.clientEmail(), draft.clientAddress(),
                 lineItems, draft.taxPercent(), draft.discount(), draft.notes(),
                 draft.signature(), draft.createdAt(), draft.updatedAt()
         );
@@ -27,10 +28,10 @@ final class DraftMapper {
                 .map(li -> new DraftLineItem(li.getId(), li.getDescription(), li.getQty(), li.getRate()))
                 .toList();
         return Draft.reconstitute(
-                entity.getId(), entity.getTemplateId(), entity.getPaperSize(),
-                entity.getInvoiceNumber(), entity.getIssuedDate(), entity.getDueDate(),
-                entity.getIssuerName(), entity.getIssuerAddress(), entity.getClientName(),
-                entity.getClientEmail(), entity.getClientAddress(),
+                entity.getId(), entity.getUserEmail(), entity.getTemplateId(),
+                entity.getPaperSize(), entity.getInvoiceNumber(), entity.getIssuedDate(),
+                entity.getDueDate(), entity.getIssuerName(), entity.getIssuerAddress(),
+                entity.getClientName(), entity.getClientEmail(), entity.getClientAddress(),
                 lineItems, entity.getTaxPercent(), entity.getDiscount(),
                 entity.getNotes(), entity.getSignature(),
                 entity.getCreatedAt(), entity.getUpdatedAt()

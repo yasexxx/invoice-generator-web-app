@@ -30,6 +30,8 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 @Testcontainers
 class InvoiceRepositoryAdapterTest {
 
+    private static final String USER_EMAIL = "user@example.com";
+
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine")
             .withNetworkMode("bridge");
@@ -127,7 +129,8 @@ class InvoiceRepositoryAdapterTest {
                 new LineItem(UUID.randomUUID(), "Work", 2, new BigDecimal("100.00"))
         );
         Invoice invoice = new Invoice(
-                UUID.randomUUID(), TemplateId.CORPORATE, "ACME Corp", "acme@example.com",
+                UUID.randomUUID(), USER_EMAIL, "INV-001", TemplateId.CORPORATE,
+                "ACME Corp", "acme@example.com",
                 "123 Main St", items, new BigDecimal("10"), new BigDecimal("20.00"), ""
         );
         adapter.save(invoice);
@@ -135,7 +138,6 @@ class InvoiceRepositoryAdapterTest {
 
         Invoice found = adapter.findById(invoice.id()).orElseThrow();
 
-        // subtotal=200, tax=20, total=220-20=200
         assertThat(found.calculateTotals().total()).isEqualByComparingTo("200.00");
     }
 
@@ -146,14 +148,16 @@ class InvoiceRepositoryAdapterTest {
 
     private Invoice minimalInvoice() {
         return new Invoice(
-                UUID.randomUUID(), TemplateId.MINIMALIST, "ACME Corp", "acme@example.com",
+                UUID.randomUUID(), USER_EMAIL, "INV-001", TemplateId.MINIMALIST,
+                "ACME Corp", "acme@example.com",
                 "123 Main St", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
         );
     }
 
     private Invoice invoiceWithItems(List<LineItem> items) {
         return new Invoice(
-                UUID.randomUUID(), TemplateId.MINIMALIST, "ACME Corp", "acme@example.com",
+                UUID.randomUUID(), USER_EMAIL, "INV-002", TemplateId.MINIMALIST,
+                "ACME Corp", "acme@example.com",
                 "123 Main St", items, BigDecimal.ZERO, BigDecimal.ZERO, ""
         );
     }

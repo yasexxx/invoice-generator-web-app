@@ -1,5 +1,6 @@
 package com.invoicely.infrastructure.web;
 
+import com.invoicely.application.invoice.DuplicateInvoiceNumberException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -30,6 +31,12 @@ public class GlobalExceptionHandler {
         problem.setProperty("errors", errors);
         log.warn("[WEB] Validation failed fields={}", errors.keySet());
         return problem;
+    }
+
+    @ExceptionHandler(DuplicateInvoiceNumberException.class)
+    public ProblemDetail handleDuplicateInvoiceNumber(DuplicateInvoiceNumberException ex) {
+        log.warn("[WEB] Duplicate invoice number: {}", ex.getMessage());
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

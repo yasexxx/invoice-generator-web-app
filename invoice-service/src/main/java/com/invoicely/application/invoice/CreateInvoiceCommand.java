@@ -6,12 +6,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record CreateInvoiceCommand(
+    String     userEmail,
+    String     invoiceNumber,
     TemplateId templateId,
-    String clientName,
-    String clientEmail,
-    String clientAddress,
+    String     clientName,
+    String     clientEmail,
+    String     clientAddress,
     List<LineItemCommand> lineItems,
     BigDecimal taxPercent,
     BigDecimal discount,
-    String notes
+    String     notes
 ) {}

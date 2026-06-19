@@ -29,6 +29,9 @@ class DraftEntity {
     @Id
     private UUID id;
 
+    @Column(name = "user_email", nullable = false)
+    private String userEmail;
+
     @Column(name = "template_id", nullable = false, length = 20)
     private String templateId;
 

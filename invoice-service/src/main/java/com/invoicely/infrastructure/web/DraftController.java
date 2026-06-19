@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,8 @@ import java.util.UUID;
 @Slf4j
 public class DraftController {
 
+    private static final String USER_EMAIL_HEADER = "X-User-Email";
+
     private final CreateDraftUseCase createDraftUseCase;
     private final UpdateDraftUseCase updateDraftUseCase;
     private final ListDraftsUseCase  listDraftsUseCase;
@@ -40,25 +43,31 @@ public class DraftController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DraftSummaryRestResponse createDraft(@Valid @RequestBody SaveDraftRequest request) {
+    public DraftSummaryRestResponse createDraft(
+            @RequestHeader(value = USER_EMAIL_HEADER, defaultValue = "") String userEmail,
+            @Valid @RequestBody SaveDraftRequest request) {
         log.debug("[WEB] POST /api/v1/drafts invoiceNumber={}", request.invoiceNumber());
-        return toSummaryResponse(createDraftUseCase.execute(toCommand(request)));
+        return toSummaryResponse(createDraftUseCase.execute(toCommand(userEmail, request)));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public DraftSummaryRestResponse updateDraft(
+            @RequestHeader(value = USER_EMAIL_HEADER, defaultValue = "") String userEmail,
             @PathVariable UUID id,
             @Valid @RequestBody SaveDraftRequest request) {
         log.debug("[WEB] PUT /api/v1/drafts/{} invoiceNumber={}", id, request.invoiceNumber());
-        return toSummaryResponse(updateDraftUseCase.execute(id, toCommand(request)));
+        return toSummaryResponse(updateDraftUseCase.execute(id, toCommand(userEmail, request)));
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<DraftSummaryRestResponse> listDrafts() {
-        log.debug("[WEB] GET /api/v1/drafts");
-        return listDraftsUseCase.execute().stream().map(this::toSummaryResponse).toList();
+    public List<DraftSummaryRestResponse> listDrafts(
+            @RequestHeader(value = USER_EMAIL_HEADER, defaultValue = "") String userEmail) {
+        log.debug("[WEB] GET /api/v1/drafts userEmail={}", userEmail);
+        return listDraftsUseCase.execute(userEmail).stream()
+                .map(this::toSummaryResponse)
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -75,15 +84,15 @@ public class DraftController {
         deleteDraftUseCase.delete(id);
     }
 
-    private SaveDraftCommand toCommand(SaveDraftRequest r) {
+    private SaveDraftCommand toCommand(String userEmail, SaveDraftRequest r) {
         List<SaveDraftLineItemCommand> lineItems = r.lineItems().stream()
                 .map(li -> new SaveDraftLineItemCommand(li.description(), li.qty(), li.rate()))
                 .toList();
         return new SaveDraftCommand(
-                r.templateId(), r.paperSize(), r.invoiceNumber(), r.issuedDate(), r.dueDate(),
-                r.issuerName(), r.issuerAddress(), r.clientName(), r.clientEmail(),
-                r.clientAddress(), lineItems, r.taxPercent(), r.discount(),
-                r.notes(), r.signature()
+                userEmail, r.templateId(), r.paperSize(), r.invoiceNumber(),
+                r.issuedDate(), r.dueDate(), r.issuerName(), r.issuerAddress(),
+                r.clientName(), r.clientEmail(), r.clientAddress(),
+                lineItems, r.taxPercent(), r.discount(), r.notes(), r.signature()
         );
     }
 

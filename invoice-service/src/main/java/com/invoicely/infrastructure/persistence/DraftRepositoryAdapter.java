@@ -30,14 +30,32 @@ public class DraftRepositoryAdapter implements DraftRepository {
     }
 
     @Override
-    public List<Draft> findAll() {
-        log.debug("[REPO] Listing all drafts");
-        return jpaRepository.findAll().stream().map(DraftMapper::toDomain).toList();
+    public List<Draft> findAllByUserEmail(String userEmail) {
+        log.debug("[REPO] Listing drafts userEmail={}", userEmail);
+        return jpaRepository.findAllByUserEmail(userEmail).stream()
+                .map(DraftMapper::toDomain)
+                .toList();
     }
 
     @Override
     public void deleteById(UUID id) {
         log.debug("[REPO] Deleting draft id={}", id);
         jpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByUserEmailAndInvoiceNumberExcluding(
+            String userEmail, String invoiceNumber, UUID excludeId) {
+        if (excludeId == null) {
+            return jpaRepository.existsByUserEmailAndInvoiceNumber(userEmail, invoiceNumber);
+        }
+        return jpaRepository.existsByUserEmailAndInvoiceNumberAndIdNot(
+                userEmail, invoiceNumber, excludeId);
+    }
+
+    @Override
+    public List<String> findInvoiceNumbersByUserEmail(String userEmail) {
+        log.debug("[REPO] Finding draft invoice numbers userEmail={}", userEmail);
+        return jpaRepository.findInvoiceNumbersByUserEmail(userEmail);
     }
 }

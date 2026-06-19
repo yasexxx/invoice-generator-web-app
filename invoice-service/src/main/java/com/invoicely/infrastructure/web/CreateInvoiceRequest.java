@@ -11,6 +11,7 @@ import java.util.List;
 
 public record CreateInvoiceRequest(
         @NotBlank String templateId,
+        String invoiceNumber,
         @NotBlank String clientName,
         @NotBlank @Email String clientEmail,
         String clientAddress,

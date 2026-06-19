@@ -15,6 +15,8 @@ final class InvoiceMapper {
                 .toList();
         return new InvoiceEntity(
                 invoice.id(),
+                invoice.userEmail(),
+                invoice.invoiceNumber(),
                 invoice.templateId(),
                 invoice.clientName(),
                 invoice.clientEmail(),
@@ -33,6 +35,8 @@ final class InvoiceMapper {
                 .toList();
         return Invoice.reconstitute(
                 entity.getId(),
+                entity.getUserEmail(),
+                entity.getInvoiceNumber(),
                 entity.getTemplateId(),
                 entity.getClientName(),
                 entity.getClientEmail(),

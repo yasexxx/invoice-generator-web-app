@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record SaveDraftCommand(
+        String     userEmail,
         String     templateId,
         String     paperSize,
         String     invoiceNumber,

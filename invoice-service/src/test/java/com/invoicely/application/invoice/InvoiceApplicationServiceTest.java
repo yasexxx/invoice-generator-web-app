@@ -1,6 +1,7 @@
 package com.invoicely.application.invoice;
 
 import com.invoicely.application.port.InvoiceEventPort;
+import com.invoicely.domain.draft.DraftRepository;
 import com.invoicely.domain.invoice.Invoice;
 import com.invoicely.domain.invoice.InvoiceRepository;
 import com.invoicely.domain.invoice.LineItem;
@@ -30,6 +31,9 @@ class InvoiceApplicationServiceTest {
     private InvoiceRepository invoiceRepository;
 
     @Mock
+    private DraftRepository draftRepository;
+
+    @Mock
     private InvoiceEventPort eventPort;
 
     @InjectMocks
@@ -42,7 +46,6 @@ class InvoiceApplicationServiceTest {
 
     @Test
     void execute_returnsResponseWithCorrectTotals() {
-        // subtotal = 1×100 = 100, tax = 100×10% = 10, total = 110
         CreateInvoiceCommand command = command(
                 List.of(new LineItemCommand("Dev work", 1, new BigDecimal("100.00"))),
                 new BigDecimal("10"), BigDecimal.ZERO
@@ -108,7 +111,8 @@ class InvoiceApplicationServiceTest {
     private CreateInvoiceCommand command(
             List<LineItemCommand> items, BigDecimal taxPercent, BigDecimal discount) {
         return new CreateInvoiceCommand(
-                TemplateId.MINIMALIST, "ACME Corp", "acme@example.com",
+                "user@example.com", "", TemplateId.MINIMALIST,
+                "ACME Corp", "acme@example.com",
                 "123 Main St", items, taxPercent, discount, "Notes"
         );
     }

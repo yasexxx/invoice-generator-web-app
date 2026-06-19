@@ -20,9 +20,6 @@ class InvoiceTest {
             new LineItem(UUID.randomUUID(), "Design",      2, new BigDecimal("50.00")),
             new LineItem(UUID.randomUUID(), "Development", 5, new BigDecimal("100.00"))
         );
-        // subtotal = (2×50) + (5×100) = 600.00
-        // tax      = 600.00 × 10%     =  60.00
-        // total    = 600.00 + 60.00 − 50.00 = 610.00
         Invoice invoice = invoice(items, "10", "50.00");
 
         InvoiceTotals totals = invoice.calculateTotals();
@@ -65,8 +62,8 @@ class InvoiceTest {
     @Test
     void constructor_rejectsBlankClientName() {
         assertThatThrownBy(() -> new Invoice(
-            ID, TemplateId.MINIMALIST, "  ", "x@example.com",
-            "Addr", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
+            ID, "user@example.com", "INV-001", TemplateId.MINIMALIST,
+            "  ", "x@example.com", "Addr", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
         ))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("clientName");
@@ -75,8 +72,8 @@ class InvoiceTest {
     @Test
     void constructor_rejectsNullClientName() {
         assertThatThrownBy(() -> new Invoice(
-            ID, TemplateId.MINIMALIST, null, "x@example.com",
-            "Addr", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
+            ID, "user@example.com", "INV-001", TemplateId.MINIMALIST,
+            null, "x@example.com", "Addr", List.of(), BigDecimal.ZERO, BigDecimal.ZERO, ""
         ))
             .isInstanceOf(IllegalArgumentException.class);
     }
@@ -85,27 +82,28 @@ class InvoiceTest {
     void lineItems_areImmutable() {
         List<LineItem> mutable = new ArrayList<>();
         mutable.add(new LineItem(UUID.randomUUID(), "A", 1, BigDecimal.TEN));
-        Invoice invoice = invoice(mutable, "0", "0");
+        Invoice inv = invoice(mutable, "0", "0");
         mutable.clear();
 
-        assertThat(invoice.lineItems()).hasSize(1);
+        assertThat(inv.lineItems()).hasSize(1);
     }
 
     @Test
     void lineItems_cannotBeModifiedViaGetter() {
-        Invoice invoice = invoice(
+        Invoice inv = invoice(
             List.of(new LineItem(UUID.randomUUID(), "A", 1, BigDecimal.TEN)),
             "0", "0"
         );
 
-        assertThatThrownBy(() -> invoice.lineItems().add(
+        assertThatThrownBy(() -> inv.lineItems().add(
             new LineItem(UUID.randomUUID(), "B", 1, BigDecimal.ONE)
         )).isInstanceOf(UnsupportedOperationException.class);
     }
 
     private Invoice invoice(List<LineItem> items, String taxPercent, String discount) {
         return new Invoice(
-            ID, TemplateId.MINIMALIST, "ACME Corp", "acme@example.com",
+            ID, "user@example.com", "INV-001", TemplateId.MINIMALIST,
+            "ACME Corp", "acme@example.com",
             "123 Main St", items,
             new BigDecimal(taxPercent), new BigDecimal(discount), "Notes"
         );

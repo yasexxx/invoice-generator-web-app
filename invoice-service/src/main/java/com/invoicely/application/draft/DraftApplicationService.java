@@ -1,8 +1,10 @@
 package com.invoicely.application.draft;
 
+import com.invoicely.application.invoice.DuplicateInvoiceNumberException;
 import com.invoicely.domain.draft.Draft;
 import com.invoicely.domain.draft.DraftLineItem;
 import com.invoicely.domain.draft.DraftRepository;
+import com.invoicely.domain.invoice.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,17 +23,20 @@ public class DraftApplicationService
         implements CreateDraftUseCase, UpdateDraftUseCase, ListDraftsUseCase,
                    GetDraftUseCase, DeleteDraftUseCase {
 
-    private final DraftRepository draftRepository;
+    private final DraftRepository   draftRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Override
     public DraftSummaryResponse execute(SaveDraftCommand command) {
         log.debug("[APP] Creating draft invoiceNumber={}", command.invoiceNumber());
+        guardNoDuplicate(command.userEmail(), command.invoiceNumber(), null);
         Draft draft = new Draft(
                 UUID.randomUUID(),
-                command.templateId(), command.paperSize(), command.invoiceNumber(),
-                command.issuedDate(), command.dueDate(), command.issuerName(),
-                command.issuerAddress(), command.clientName(), command.clientEmail(),
-                command.clientAddress(), toLineItems(command.lineItems()),
+                command.userEmail(), command.templateId(), command.paperSize(),
+                command.invoiceNumber(), command.issuedDate(), command.dueDate(),
+                command.issuerName(), command.issuerAddress(), command.clientName(),
+                command.clientEmail(), command.clientAddress(),
+                toLineItems(command.lineItems()),
                 command.taxPercent(), command.discount(), command.notes(), command.signature()
         );
         Draft saved = draftRepository.save(draft);
@@ -44,12 +49,14 @@ public class DraftApplicationService
         log.debug("[APP] Updating draft id={}", id);
         Draft existing = draftRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Draft not found: " + id));
+        guardNoDuplicate(command.userEmail(), command.invoiceNumber(), id);
         Draft updated = Draft.reconstitute(
                 id,
-                command.templateId(), command.paperSize(), command.invoiceNumber(),
-                command.issuedDate(), command.dueDate(), command.issuerName(),
-                command.issuerAddress(), command.clientName(), command.clientEmail(),
-                command.clientAddress(), toLineItems(command.lineItems()),
+                command.userEmail(), command.templateId(), command.paperSize(),
+                command.invoiceNumber(), command.issuedDate(), command.dueDate(),
+                command.issuerName(), command.issuerAddress(), command.clientName(),
+                command.clientEmail(), command.clientAddress(),
+                toLineItems(command.lineItems()),
                 command.taxPercent(), command.discount(), command.notes(), command.signature(),
                 existing.createdAt(), Instant.now()
         );
@@ -60,9 +67,9 @@ public class DraftApplicationService
 
     @Override
     @Transactional(readOnly = true)
-    public List<DraftSummaryResponse> execute() {
-        log.debug("[APP] Listing all drafts");
-        return draftRepository.findAll().stream()
+    public List<DraftSummaryResponse> execute(String userEmail) {
+        log.debug("[APP] Listing drafts userEmail={}", userEmail);
+        return draftRepository.findAllByUserEmail(userEmail).stream()
                 .map(this::toSummaryResponse)
                 .toList();
     }
@@ -81,6 +88,17 @@ public class DraftApplicationService
         log.debug("[APP] Deleting draft id={}", id);
         draftRepository.deleteById(id);
         log.info("[APP] Draft deleted id={}", id);
+    }
+
+    private void guardNoDuplicate(String userEmail, String invoiceNumber, UUID excludeId) {
+        if (invoiceNumber == null || invoiceNumber.isBlank()) return;
+        boolean inDrafts   = draftRepository.existsByUserEmailAndInvoiceNumberExcluding(
+                userEmail, invoiceNumber, excludeId);
+        boolean inInvoices = invoiceRepository.existsByUserEmailAndInvoiceNumber(
+                userEmail, invoiceNumber);
+        if (inDrafts || inInvoices) {
+            throw new DuplicateInvoiceNumberException(invoiceNumber);
+        }
     }
 
     private List<DraftLineItem> toLineItems(List<SaveDraftLineItemCommand> commands) {
