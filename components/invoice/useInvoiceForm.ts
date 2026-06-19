@@ -1,9 +1,9 @@
 import { useState, useCallback, useMemo } from 'react'
 import type { InvoiceFormData, InvoiceTotals, LineItem, PaperSize, TemplateId } from './invoice.types'
 
-const CURRENT_YEAR        = new Date().getFullYear()
+const CURRENT_YEAR           = new Date().getFullYear()
 const DEFAULT_INVOICE_NUMBER = `INV-${CURRENT_YEAR}-001`
-const DUE_DATE_OFFSET_MS  = 15 * 24 * 60 * 60 * 1000
+const DUE_DATE_OFFSET_MS     = 15 * 24 * 60 * 60 * 1000
 const DATE_FORMAT: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' }
 
 const now = new Date()
@@ -26,8 +26,8 @@ const DEFAULT_DATA: InvoiceFormData = {
   signature:     '',
 }
 
-export function useInvoiceForm() {
-  const [data, setData] = useState<InvoiceFormData>(DEFAULT_DATA)
+export function useInvoiceForm(initialData?: InvoiceFormData | null) {
+  const [data, setData] = useState<InvoiceFormData>(initialData ?? DEFAULT_DATA)
 
   const onTemplateChange = useCallback((templateId: TemplateId) => {
     setData((prev) => ({ ...prev, templateId }))

@@ -1,6 +1,8 @@
 'use client'
 
 import { useRef, useState, useCallback } from 'react'
+
+import { DesignSystem } from '@/lib/design-system'
 import styles from './SignatureSection.module.css'
 
 export interface SignatureSectionProps {
@@ -13,7 +15,7 @@ type SignatureMode = 'draw' | 'upload'
 const CANVAS_WIDTH    = 400
 const CANVAS_HEIGHT   = 120
 const DRAW_LINE_WIDTH = 2
-const DRAW_COLOR      = '#111827'
+const DRAW_COLOR      = DesignSystem.color('onSurface')
 
 export function SignatureSection({ signature, onChange }: SignatureSectionProps) {
   const [mode, setMode] = useState<SignatureMode>('draw')

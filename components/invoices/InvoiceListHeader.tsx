@@ -12,13 +12,22 @@ export function InvoiceListHeader() {
             Manage and track all your invoices.
           </p>
         </div>
-        <Link
-          href="/invoice/create"
-          className="inline-flex items-center gap-sm bg-primary text-on-primary px-lg py-sm rounded-full label-md hover:bg-primary/90 transition-colors shrink-0"
-        >
-          <span className="material-symbols-outlined text-[18px]">add</span>
-          New Invoice
-        </Link>
+        <div className="flex items-center gap-sm shrink-0">
+          <Link
+            href="/invoices/drafts"
+            className="inline-flex items-center gap-sm border border-outline-variant/40 text-on-surface-variant px-lg py-sm rounded-full label-md hover:border-primary/30 hover:text-on-surface transition-colors"
+          >
+            <span className="material-symbols-outlined text-[18px]">draft</span>
+            Saved Drafts
+          </Link>
+          <Link
+            href="/invoice/create"
+            className="inline-flex items-center gap-sm bg-primary text-on-primary px-lg py-sm rounded-full label-md hover:bg-primary/90 transition-colors"
+          >
+            <span className="material-symbols-outlined text-[18px]">add</span>
+            New Invoice
+          </Link>
+        </div>
       </div>
     </div>
   )

@@ -1,6 +1,9 @@
 spring:
   application:
     name: invoice-service
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/invoicely}
     username: ${SPRING_DATASOURCE_USERNAME:invoicely}
