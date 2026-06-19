@@ -12,14 +12,22 @@ import { SignatureSection }     from './SignatureSection'
 import type { EditorHandlers, InvoiceFormData } from '../invoice.types'
 import styles from './EditorPanel.module.css'
 
+const DEFAULT_BACK_HREF  = '/dashboard'
+const DEFAULT_BACK_LABEL = 'Dashboard'
+
 export interface EditorPanelProps {
-  data:     InvoiceFormData
-  handlers: EditorHandlers
+  data:       InvoiceFormData
+  handlers:   EditorHandlers
+  backHref?:  string
+  backLabel?: string
 }
 
-export function EditorPanel({ data, handlers }: EditorPanelProps) {
+export function EditorPanel({ data, handlers, backHref, backLabel }: EditorPanelProps) {
   return (
     <section className={`${styles.panel} custom-scrollbar`}>
+      <div className={styles.stickyBack}>
+        <BackLink href={backHref ?? DEFAULT_BACK_HREF} label={backLabel ?? DEFAULT_BACK_LABEL} />
+      </div>
       <div className={styles.content}>
         <EditorHeader />
 
@@ -97,7 +105,6 @@ export function EditorPanel({ data, handlers }: EditorPanelProps) {
 function EditorHeader() {
   return (
     <header className={styles.header}>
-      <BackLink href="/dashboard" label="Dashboard" />
       <h1 className="headline-lg text-primary">Create Invoice</h1>
       <p className="body-md text-text-muted">
         Complete the details below to generate your professional invoice.

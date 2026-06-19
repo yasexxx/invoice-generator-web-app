@@ -18,6 +18,11 @@
   padding-block-end: var(--spacing-xxl);
 }
 
+.stickyBack {
+  padding-inline: var(--spacing-lg);
+  padding-block-start: var(--spacing-md);
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -28,6 +33,14 @@
   .panel {
     block-size: 100%;
     overflow-y: auto;
+  }
+
+  .stickyBack {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-surface-container-low);
+    padding-block: var(--spacing-sm);
   }
 
   .content {

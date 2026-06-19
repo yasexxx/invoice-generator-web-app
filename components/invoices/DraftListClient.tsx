@@ -77,7 +77,7 @@ function DraftRowActions({ id, onDelete, disabled }: DraftRowActionsProps) {
   return (
     <div className="flex items-center justify-end gap-md">
       <Link
-        href={`/invoice/create?draft=${id}`}
+        href={`/invoice/drafts/${id}`}
         className="label-sm text-primary hover:text-primary/80 transition-colors"
       >
         Continue editing

@@ -77,12 +77,10 @@ export function InvoiceCreator({ initialData, initialDraftId, draftNotFound = fa
         saveStatus={saveStatus}
         onSend={handleSend}
         onSaveDraft={handleSaveDraft}
-        backHref={backHref}
-        backLabel={backLabel}
       />
       {showDraftBanner && <DraftNotFoundBanner onDismiss={() => setShowDraftBanner(false)} />}
       <main className={styles.workspace}>
-        <EditorPanel  data={data}   handlers={handlers} />
+        <EditorPanel  data={data}   handlers={handlers} backHref={backHref} backLabel={backLabel} />
         <PreviewPanel data={data}   totals={totals} />
       </main>
     </div>

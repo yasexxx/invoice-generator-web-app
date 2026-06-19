@@ -1,32 +1,24 @@
-import { Brand, BackLink } from '@/components/ui'
+import { Brand } from '@/components/ui'
 import styles from './InvoiceTopNav.module.css'
 
 export interface InvoiceTopNavProps {
   saveStatus:  string
   onSend:      () => void
   onSaveDraft: () => void
-  backHref?:   string
-  backLabel?:  string
 }
 
-export function InvoiceTopNav({ saveStatus, onSend, onSaveDraft, backHref, backLabel }: InvoiceTopNavProps) {
+export function InvoiceTopNav({ saveStatus, onSend, onSaveDraft }: InvoiceTopNavProps) {
   return (
     <nav className={styles.nav}>
-      <NavLeft backHref={backHref} backLabel={backLabel} />
+      <NavLeft />
       <NavRight saveStatus={saveStatus} onSend={onSend} onSaveDraft={onSaveDraft} />
     </nav>
   )
 }
 
-interface NavLeftProps {
-  backHref?:  string
-  backLabel?: string
-}
-
-function NavLeft({ backHref, backLabel }: NavLeftProps) {
+function NavLeft() {
   return (
     <div className={styles.navLeft}>
-      {backHref && <BackLink href={backHref} label={backLabel ?? 'Back'} />}
       <Brand showIcon />
     </div>
   )
