@@ -1,16 +1,25 @@
 'use server'
 
 import { headers }          from 'next/headers'
+import { getUserEmail }     from '@/lib/auth/session'
 import type { InvoiceFormData } from '@/components/invoice/invoice.types'
 import type { DraftRow }    from '@/components/invoices/draft-list.types'
 import { devLog }           from '@/lib/logger'
 
 const INVOICE_API_URL    = process.env.INVOICE_API_URL ?? 'http://localhost:8080'
 const CORRELATION_HEADER = 'x-correlation-id'
+const USER_EMAIL_HEADER  = 'X-User-Email'
 
-async function getCorrelationId(): Promise<string> {
-  const incoming = await headers()
-  return incoming.get(CORRELATION_HEADER) ?? crypto.randomUUID()
+async function buildHeaders(includeContentType = true): Promise<Record<string, string>> {
+  const incoming      = await headers()
+  const correlationId = incoming.get(CORRELATION_HEADER) ?? crypto.randomUUID()
+  const userEmail     = await getUserEmail()
+  const base: Record<string, string> = {
+    'X-Correlation-ID': correlationId,
+    [USER_EMAIL_HEADER]: userEmail ?? '',
+  }
+  if (includeContentType) base['Content-Type'] = 'application/json'
+  return base
 }
 
 type ApiLineItem = { id: string; description: string; qty: number; rate: number }
@@ -108,13 +117,13 @@ function toInvoiceFormData(api: DraftApiResponse): InvoiceFormData {
 }
 
 export async function createDraft(data: InvoiceFormData): Promise<CreateDraftResult> {
-  const correlationId = await getCorrelationId()
-  devLog('drafts/actions', 'createDraft called', { correlationId })
+  const reqHeaders = await buildHeaders()
+  devLog('drafts/actions', 'createDraft called')
 
   try {
     const res = await fetch(`${INVOICE_API_URL}/api/v1/drafts`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'X-Correlation-ID': correlationId },
+      headers: reqHeaders,
       body: JSON.stringify(toRequestBody(data)),
     })
     if (!res.ok) {
@@ -122,7 +131,7 @@ export async function createDraft(data: InvoiceFormData): Promise<CreateDraftRes
       return { success: false, error: detail.detail ?? `HTTP ${res.status}` }
     }
     const json = (await res.json()) as { draftId: string }
-    devLog('drafts/actions', 'draft created', { correlationId, draftId: json.draftId })
+    devLog('drafts/actions', 'draft created', { draftId: json.draftId })
     return { success: true, draftId: json.draftId }
   } catch (err: unknown) {
     return { success: false, error: err instanceof Error ? err.message : 'Network error' }
@@ -130,13 +139,13 @@ export async function createDraft(data: InvoiceFormData): Promise<CreateDraftRes
 }
 
 export async function updateDraft(id: string, data: InvoiceFormData): Promise<CreateDraftResult> {
-  const correlationId = await getCorrelationId()
-  devLog('drafts/actions', 'updateDraft called', { correlationId, id })
+  const reqHeaders = await buildHeaders()
+  devLog('drafts/actions', 'updateDraft called', { id })
 
   try {
     const res = await fetch(`${INVOICE_API_URL}/api/v1/drafts/${id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json', 'X-Correlation-ID': correlationId },
+      headers: reqHeaders,
       body: JSON.stringify(toRequestBody(data)),
     })
     if (!res.ok) {
@@ -151,12 +160,12 @@ export async function updateDraft(id: string, data: InvoiceFormData): Promise<Cr
 }
 
 export async function getDraftById(id: string): Promise<GetDraftResult> {
-  const correlationId = await getCorrelationId()
-  devLog('drafts/actions', 'getDraftById called', { correlationId, id })
+  const reqHeaders = await buildHeaders(false)
+  devLog('drafts/actions', 'getDraftById called', { id })
 
   try {
     const res = await fetch(`${INVOICE_API_URL}/api/v1/drafts/${id}`, {
-      headers: { 'X-Correlation-ID': correlationId },
+      headers: reqHeaders,
       cache: 'no-store',
     })
     if (!res.ok) return { success: false, error: `HTTP ${res.status}` }
@@ -168,12 +177,12 @@ export async function getDraftById(id: string): Promise<GetDraftResult> {
 }
 
 export async function listDrafts(): Promise<ListDraftsResult> {
-  const correlationId = await getCorrelationId()
-  devLog('drafts/actions', 'listDrafts called', { correlationId })
+  const reqHeaders = await buildHeaders(false)
+  devLog('drafts/actions', 'listDrafts called')
 
   try {
     const res = await fetch(`${INVOICE_API_URL}/api/v1/drafts`, {
-      headers: { 'X-Correlation-ID': correlationId },
+      headers: reqHeaders,
       cache: 'no-store',
     })
     if (!res.ok) return { success: false, error: `HTTP ${res.status}` }
@@ -184,7 +193,7 @@ export async function listDrafts(): Promise<ListDraftsResult> {
       clientName:    d.clientName,
       updatedAt:     d.updatedAt,
     }))
-    devLog('drafts/actions', 'drafts listed', { correlationId, count: rows.length })
+    devLog('drafts/actions', 'drafts listed', { count: rows.length })
     return { success: true, rows }
   } catch (err: unknown) {
     return { success: false, error: err instanceof Error ? err.message : 'Network error' }
@@ -192,13 +201,13 @@ export async function listDrafts(): Promise<ListDraftsResult> {
 }
 
 export async function deleteDraft(id: string): Promise<DeleteDraftResult> {
-  const correlationId = await getCorrelationId()
-  devLog('drafts/actions', 'deleteDraft called', { correlationId, id })
+  const reqHeaders = await buildHeaders(false)
+  devLog('drafts/actions', 'deleteDraft called', { id })
 
   try {
     const res = await fetch(`${INVOICE_API_URL}/api/v1/drafts/${id}`, {
       method: 'DELETE',
-      headers: { 'X-Correlation-ID': correlationId },
+      headers: reqHeaders,
     })
     if (!res.ok) return { success: false, error: `HTTP ${res.status}` }
     return { success: true }

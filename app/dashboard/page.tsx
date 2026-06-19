@@ -49,9 +49,9 @@ function QuickActionsRow() {
         href="/invoices"
       />
       <ActionCard
-        icon="manage_accounts"
-        title="Account Settings"
-        description="Update your profile and preferences."
+        icon="settings"
+        title="Settings"
+        description="Manage your profile, security, and invoice preferences."
         href="/settings"
       />
     </div>

@@ -1,3 +1,4 @@
+import Link            from 'next/link'
 import { Brand, Button } from '@/components/ui'
 import { logoutAction }  from '@/lib/auth/actions'
 
@@ -14,6 +15,12 @@ export function DashboardNav({ email }: DashboardNavProps) {
           {email && (
             <span className="label-sm text-on-surface-variant hidden sm:block">{email}</span>
           )}
+          <Link href="/settings" aria-label="Settings">
+            <Button type="button" variant="ghost" size="sm">
+              <span className="material-symbols-outlined text-[18px]">settings</span>
+              <span className="hidden sm:inline">Settings</span>
+            </Button>
+          </Link>
           <form action={logoutAction}>
             <Button type="submit" variant="ghost" size="sm">
               <span className="material-symbols-outlined text-[18px]">logout</span>

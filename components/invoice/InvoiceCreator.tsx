@@ -19,9 +19,11 @@ export interface InvoiceCreatorProps {
   initialData:    InvoiceFormData | null
   initialDraftId: string | null
   draftNotFound?: boolean
+  backHref?:      string
+  backLabel?:     string
 }
 
-export function InvoiceCreator({ initialData, initialDraftId, draftNotFound = false }: InvoiceCreatorProps) {
+export function InvoiceCreator({ initialData, initialDraftId, draftNotFound = false, backHref, backLabel }: InvoiceCreatorProps) {
   const { data, totals, ...hookHandlers } = useInvoiceForm(initialData)
   const [isPending, startTransition]      = useTransition()
   const [saveStatus, setSaveStatus]       = useState(STATUS_IDLE)
@@ -75,6 +77,8 @@ export function InvoiceCreator({ initialData, initialDraftId, draftNotFound = fa
         saveStatus={saveStatus}
         onSend={handleSend}
         onSaveDraft={handleSaveDraft}
+        backHref={backHref}
+        backLabel={backLabel}
       />
       {showDraftBanner && <DraftNotFoundBanner onDismiss={() => setShowDraftBanner(false)} />}
       <main className={styles.workspace}>
