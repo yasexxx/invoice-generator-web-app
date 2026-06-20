@@ -7,6 +7,8 @@ import { SocialAuthButtons } from './SocialAuthButtons'
 import { loginAction }    from '@/lib/auth/actions'
 import { INITIAL_ERROR } from '@/lib/auth/types'
 
+const REMEMBER_ME_DAYS = 30
+
 export function LoginForm() {
   const [remember,      setRemember]      = useState(false)
   const [showPassword,  setShowPassword]  = useState(false)
@@ -118,7 +120,7 @@ function RememberCheckbox({ checked, onChange }: RememberCheckboxProps) {
         onChange={(e) => onChange(e.target.checked)}
         className="w-4 h-4 rounded bg-surface-container-low border-outline-variant/30 text-primary focus:ring-primary/20 cursor-pointer"
       />
-      <span className="body-md text-on-surface-variant">Remember me for 30 days</span>
+      <span className="body-md text-on-surface-variant">Remember me for {REMEMBER_ME_DAYS} days</span>
     </label>
   )
 }

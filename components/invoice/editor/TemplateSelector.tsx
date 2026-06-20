@@ -1,6 +1,13 @@
 import type { TemplateId } from '../invoice.types'
 import styles from './TemplateSelector.module.css'
 
+// Thumbnail decorative line widths — represent mock document content proportions
+const THUMB_LINE_WIDTH_TITLE    = '55%'
+const THUMB_LINE_WIDTH_SUBTITLE = '35%'
+const THUMB_LINE_WIDTH_BODY_LG  = '80%'
+const THUMB_LINE_WIDTH_BODY_MD  = '65%'
+const THUMB_LINE_WIDTH_BODY_SM  = '72%'
+
 interface Template {
   id:    TemplateId
   label: string
@@ -68,12 +75,12 @@ function TemplateThumbnail() {
     <div className={styles.thumbDoc}>
       <div className={styles.thumbHeaderBar} />
       <div className={styles.thumbBody}>
-        <div className={styles.thumbLine} style={{ width: '55%' }} />
-        <div className={styles.thumbLine} style={{ width: '35%' }} />
+        <div className={styles.thumbLine} style={{ width: THUMB_LINE_WIDTH_TITLE }} />
+        <div className={styles.thumbLine} style={{ width: THUMB_LINE_WIDTH_SUBTITLE }} />
         <div className={styles.thumbDivider} />
-        <div className={styles.thumbLine} style={{ width: '80%' }} />
-        <div className={styles.thumbLine} style={{ width: '65%' }} />
-        <div className={styles.thumbLine} style={{ width: '72%' }} />
+        <div className={styles.thumbLine} style={{ width: THUMB_LINE_WIDTH_BODY_LG }} />
+        <div className={styles.thumbLine} style={{ width: THUMB_LINE_WIDTH_BODY_MD }} />
+        <div className={styles.thumbLine} style={{ width: THUMB_LINE_WIDTH_BODY_SM }} />
         <div className={styles.thumbDivider} />
         <div className={styles.thumbAccentLine} />
       </div>

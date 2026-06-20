@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useCallback } from 'react'
+import Image from 'next/image'
 
 import { DesignSystem } from '@/lib/design-system'
 import styles from './SignatureSection.module.css'
@@ -80,6 +81,7 @@ function SignatureCanvas({ onConfirm }: { onConfirm: (dataUrl: string) => void }
   const onPointerDown = useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     isDrawing.current  = true
     lastPoint.current  = getPoint(e)
+    // PointerEvent.target is typed as EventTarget; canvas is the only possible target here
     ;(e.target as HTMLCanvasElement).setPointerCapture(e.pointerId)
   }, [])
 
@@ -181,7 +183,8 @@ function CurrentSignature({ signature, onRemove }: CurrentSignatureProps) {
     <div className={styles.currentSignature}>
       <span className={styles.currentSignatureLabel}>Current signature</span>
       <div className={styles.currentSignaturePreview}>
-        <img src={signature} alt="Signature preview" className={styles.signatureImg} />
+        {/* unoptimized: signature is a canvas data: URL that Next.js cannot optimize */}
+        <Image src={signature} alt="Signature preview" className={styles.signatureImg} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} unoptimized />
         <button type="button" onClick={onRemove} className={styles.removeBtn} aria-label="Remove signature">
           <span className="material-symbols-outlined" aria-hidden="true">delete</span>
         </button>

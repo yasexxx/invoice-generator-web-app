@@ -1,3 +1,6 @@
+const SOCIAL_PROOF_COUNT         = '50,000+'
+const DECORATIVE_ICON_FONT_SIZE  = '300px'
+
 const VALUE_PROPS = [
   {
     icon: 'bolt',
@@ -28,7 +31,7 @@ function ValuePropContent() {
         Financial clarity for your business.
       </h1>
       <p className="body-lg text-on-surface-variant max-w-[320px]">
-        Join 50,000+ businesses automating their invoicing and getting paid faster.
+        Join {SOCIAL_PROOF_COUNT} businesses automating their invoicing and getting paid faster.
       </p>
     </div>
   )
@@ -57,7 +60,7 @@ function DecorativeIcon() {
     <div className="absolute bottom-[-10%] right-[-5%] opacity-20 pointer-events-none select-none">
       <span
         className="material-symbols-outlined text-primary"
-        style={{ fontSize: '300px', fontVariationSettings: "'FILL' 1" }}
+        style={{ fontSize: DECORATIVE_ICON_FONT_SIZE, fontVariationSettings: "'FILL' 1" }}
       >
         receipt_long
       </span>

@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui'
 import type { LineItem } from '../invoice.types'
 
 export interface LineItemsEditorProps {
@@ -6,8 +7,6 @@ export interface LineItemsEditorProps {
   onUpdate:       (id: string, field: keyof Omit<LineItem, 'id'>, value: string | number) => void
   onRemove:       (id: string) => void
 }
-
-const BORDER_INPUT = 'w-full bg-transparent border-b border-outline-variant/20 py-1 focus:border-primary outline-none'
 
 export function LineItemsEditor({ lineItems, onAdd, onUpdate, onRemove }: LineItemsEditorProps) {
   return (
@@ -49,44 +48,49 @@ function LineItemRow({ item, onUpdate, onRemove }: LineItemRowProps) {
   return (
     <div className="glass-panel p-md rounded-xl space-y-sm">
       <div className="grid grid-cols-12 gap-md">
+        {/* Description — full width */}
         <div className="col-span-12">
-          <input
+          <Input
+            size="sm"
             type="text"
             value={item.description}
             placeholder="Add description..."
             onChange={(e) => onUpdate(item.id, 'description', e.target.value)}
-            className={`${BORDER_INPUT} font-medium text-on-surface`}
           />
         </div>
 
+        {/* Quantity */}
         <div className="col-span-4">
-          <label className="block text-[10px] text-text-muted font-bold tracking-widest mb-1">QTY</label>
-          <input
+          <Input
+            size="sm"
+            label="QTY"
             type="number"
             min={0}
             value={item.qty}
             onChange={(e) => onUpdate(item.id, 'qty', e.target.value)}
-            className={BORDER_INPUT}
           />
         </div>
 
+        {/* Rate */}
         <div className="col-span-4">
-          <label className="block text-[10px] text-text-muted font-bold tracking-widest mb-1">RATE ($)</label>
-          <input
+          <Input
+            size="sm"
+            label="RATE ($)"
             type="number"
             min={0}
             value={item.rate}
             onChange={(e) => onUpdate(item.id, 'rate', e.target.value)}
-            className={BORDER_INPUT}
           />
         </div>
 
+        {/* Line total */}
         <div className="col-span-3 flex flex-col justify-end text-right">
           <div className={`font-semibold ${lineTotal > 0 ? 'text-primary' : 'text-text-muted'}`}>
             ${lineTotal.toFixed(2)}
           </div>
         </div>
 
+        {/* Remove */}
         <div className="col-span-1 flex items-end justify-center">
           <button
             onClick={() => onRemove(item.id)}
