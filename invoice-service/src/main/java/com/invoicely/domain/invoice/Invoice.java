@@ -74,6 +74,14 @@ public class Invoice {
         this.createdAt     = createdAt;
     }
 
+    /**
+     * Reconstitutes an {@link Invoice} from persisted state.
+     * Unlike the primary constructor, this preserves the original {@code createdAt}
+     * timestamp rather than setting it to the current instant.
+     *
+     * @param id        persisted aggregate ID
+     * @param createdAt original creation timestamp from the database
+     */
     public static Invoice reconstitute(
             UUID id,
             String userEmail,
@@ -91,6 +99,13 @@ public class Invoice {
                            clientAddress, lineItems, taxPercent, discount, notes, createdAt);
     }
 
+    /**
+     * Calculates invoice totals by summing line-item subtotals, applying tax on the subtotal,
+     * then subtracting the discount. The discount is not clamped; the total is floored at zero.
+     * All results are rounded to 2 decimal places using {@code HALF_UP}.
+     *
+     * @return immutable {@link InvoiceTotals} with subtotal, taxAmount, and total
+     */
     public InvoiceTotals calculateTotals() {
         BigDecimal subtotal = lineItems.stream()
                 .map(LineItem::subtotal)
