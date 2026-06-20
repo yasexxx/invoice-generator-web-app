@@ -1,0 +1,287 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: color-mix(in srgb, var(--color-background) 60%, transparent);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+.panel {
+  inline-size: min(100%, 520px);
+  max-block-size: 90svh;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--color-surface-container-high);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--rounded-xl) var(--rounded-xl) 0 0;
+  box-shadow: var(--shadow-modal);
+  animation: slideUp 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@media (min-width: 640px) {
+  .backdrop {
+    align-items: center;
+  }
+
+  .panel {
+    border-radius: var(--rounded-xl);
+    animation: scaleIn 0.2s ease;
+  }
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  border-block-end: 1px solid var(--color-outline-variant);
+  flex-shrink: 0;
+}
+
+.headerTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.headerTitle span {
+  font-size: 20px;
+  color: var(--color-primary);
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xs);
+  border: none;
+  border-radius: var(--rounded-default);
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  background: color-mix(in srgb, var(--color-outline-variant) 60%, transparent);
+  color: var(--color-on-surface);
+}
+
+/* ── Body ────────────────────────────────────────────────────────── */
+
+.body {
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.description {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--color-on-surface-variant);
+  line-height: 1.6;
+}
+
+/* ── Success Badge ───────────────────────────────────────────────── */
+
+.successBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--rounded-default);
+  background: color-mix(in srgb, var(--color-success) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-success);
+}
+
+.successBadge span {
+  font-size: 20px;
+}
+
+/* ── Actions ─────────────────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.sendBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border: none;
+  border-radius: var(--rounded-default);
+  background: var(--color-primary-container);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 150ms ease, transform 150ms ease;
+}
+
+.sendBtn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.sendBtn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.sendBtn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 40%, transparent);
+  border-radius: var(--rounded-default);
+  background: transparent;
+  color: var(--color-primary);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.downloadBtn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.downloadBtn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ── Spinner ─────────────────────────────────────────────────────── */
+
+.spinIcon {
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Share Section ───────────────────────────────────────────────── */
+
+.shareSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.shareLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+}
+
+.shareButtons {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.shareBtn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--rounded-default);
+  background: var(--color-surface-container);
+  color: var(--color-on-surface-variant);
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+  min-inline-size: 88px;
+}
+
+.shareBtn:hover {
+  background: var(--color-surface-container-highest);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.shareBtnIcon {
+  font-size: 22px;
+}
+
+.shareBtnLabel {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+/* ── Done Button ─────────────────────────────────────────────────── */
+
+.doneBtn {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: none;
+  border-radius: var(--rounded-default);
+  background: transparent;
+  color: var(--color-on-surface-variant);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: color 150ms ease;
+}
+
+.doneBtn:hover {
+  color: var(--color-on-surface);
+}
+
+/* ── Animations ──────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(24px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.96); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}

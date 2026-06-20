@@ -61,7 +61,7 @@ interface DocumentPageProps {
 
 function DocumentPage({ data, totals, pageItems, isFirst, isLast, themeClass, bodyRef }: DocumentPageProps) {
   return (
-    <div className={`${themeClass} ${styles.page}`} data-paper={data.paperSize}>
+    <div className={`${themeClass} ${styles.page}`} data-paper={data.paperSize} data-invoice-page>
       {isFirst ? (
         <DocumentHeader
           invoiceNumber={data.invoiceNumber}

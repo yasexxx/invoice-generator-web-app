@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export const BRAND_NAME = 'Invoicely'
+export const BRAND_NAME = 'InvoiceData'
 
 export type BrandSize = 'sm' | 'md' | 'lg'
 

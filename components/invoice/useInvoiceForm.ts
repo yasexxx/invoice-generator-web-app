@@ -1,6 +1,17 @@
 import { useState, useCallback, useMemo } from 'react'
 import type { InvoiceFormData, InvoiceTotals, LineItem, PaperSize, TemplateId } from './invoice.types'
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+export function validateForSend(data: InvoiceFormData): string | null {
+  if (!data.clientName.trim())  return 'Client name is required'
+  if (!data.clientEmail.trim()) return 'Client email is required'
+  if (!EMAIL_PATTERN.test(data.clientEmail)) return 'Client email is not a valid address'
+  const hasDescribedItem = data.lineItems.some((li) => li.description.trim())
+  if (!hasDescribedItem) return 'At least one line item must have a description'
+  return null
+}
+
 const CURRENT_YEAR           = new Date().getFullYear()
 const DEFAULT_INVOICE_NUMBER = `INV-${CURRENT_YEAR}-001`
 const DUE_DATE_OFFSET_MS     = 15 * 24 * 60 * 60 * 1000
