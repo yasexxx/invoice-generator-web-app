@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
+import { BRAND_NAME } from '@/components/ui'
 import './globals.css'
 
 const inter = Inter({
@@ -24,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Lumina Ledger — Professional Invoice Generator',
+  title: `${BRAND_NAME} — Professional Invoice Generator`,
   description: 'Generate professional invoices, track payments, and get paid faster.',
 }
 
