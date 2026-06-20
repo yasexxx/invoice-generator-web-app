@@ -99,6 +99,15 @@ public class Draft {
         this.updatedAt     = updatedAt;
     }
 
+    /**
+     * Reconstitutes a {@link Draft} from persisted state.
+     * Unlike the public constructor, this preserves the original {@code createdAt}
+     * and {@code updatedAt} timestamps rather than setting them to the current instant.
+     *
+     * @param id        persisted aggregate ID
+     * @param createdAt original creation timestamp from the database
+     * @param updatedAt last-updated timestamp from the database
+     */
     public static Draft reconstitute(
             UUID id,
             String userEmail,
