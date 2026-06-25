@@ -5,7 +5,7 @@ A full-stack invoice management platform built for speed, accuracy, and professi
 ---
 
 ## Watch Demo
-[![Watch here](https://raw.githubusercontent.com/yasexxx/yasexxx.github.io/refs/heads/main/public/video_intro.png)](https://www.youtube.com/watch?v=XxaSRmPjpaU)
+[![Watch here](https://raw.githubusercontent.com/yasexxx/invoice-generator-web-app/refs/heads/main/public/video_intro.png)](https://www.youtube.com/watch?v=XxaSRmPjpaU)
 
 
 ## Table of Contents
